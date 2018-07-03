@@ -1,0 +1,30 @@
+    Бренды
+    Фотографии
+    Модификации товаров
+    Динамические атрибуты
+    Вложенные категории
+    Дополнительные категории
+    Метки
+    Сопутствующие товары
+    Отзывы и рейтинг
+
+====================
+
+Бренды                      /shop/brands
+Вложенные категории         /shop/categories
+Метки                       /shop/tags
+Характеристики              /shop/characteristics
+
+Отзывы                      /shop/reviews -READ
+
+Товары                      /shop/products
+
+    Фотографии                  Photo
+    Модификации товара          Modification
+    Привязка к категории        categories_id
+    Дополнительные категормм    category_assignment (product_id, category_id)
+    Привязанные метки           tag_assignment
+    Значения характеристик      values (product_id, char, value)
+    Сопутствующие товары        related_assignment (product_id, related_product_id)
+    Рейтинг                     rating
+    Отзывы                      Review

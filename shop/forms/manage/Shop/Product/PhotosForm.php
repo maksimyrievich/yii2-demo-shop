@@ -15,14 +15,22 @@ class PhotosForm extends Model
     public function rules(): array
     {
         return [
+            //Здесь мы используем валидатор 'each' позволяющий валидировать массив картинок
             ['files', 'each', 'rule' => ['image']],
         ];
     }
 
+
+    /**
+     * @return bool
+     *
+     * Подгружаем файл картинки перед валидацией формы
+     */
     public function beforeValidate(): bool
     {
         if (parent::beforeValidate()) {
-            $this->files = UploadedFile::getInstances($this, 'files');
+            //Чтение файла из глобального массива FILES
+            $this->files = UploadedFile::getInstances($this, 'files'); //S_FILES
             return true;
         }
         return false;

@@ -362,6 +362,9 @@ class Product extends ActiveRecord implements AggregateRoot
         $this->updatePhotos([]);
     }
 
+    /**
+     * @param $id
+     */
     public function movePhotoUp($id): void
     {
         $photos = $this->photos;
@@ -378,6 +381,9 @@ class Product extends ActiveRecord implements AggregateRoot
         throw new \DomainException('Photo is not found.');
     }
 
+    /**
+     * @param $id
+     */
     public function movePhotoDown($id): void
     {
         $photos = $this->photos;
@@ -394,6 +400,9 @@ class Product extends ActiveRecord implements AggregateRoot
         throw new \DomainException('Photo is not found.');
     }
 
+    /**
+     * @param array $photos
+     */
     private function updatePhotos(array $photos): void
     {
         foreach ($photos as $i => $photo) {
@@ -404,7 +413,9 @@ class Product extends ActiveRecord implements AggregateRoot
     }
 
     // Related products
-
+    /**
+     * @param $id
+     */
     public function assignRelatedProduct($id): void
     {
         $assignments = $this->relatedAssignments;
@@ -417,6 +428,9 @@ class Product extends ActiveRecord implements AggregateRoot
         $this->relatedAssignments = $assignments;
     }
 
+    /**
+     * @param $id
+     */
     public function revokeRelatedProduct($id): void
     {
         $assignments = $this->relatedAssignments;
@@ -576,6 +590,9 @@ class Product extends ActiveRecord implements AggregateRoot
 
     ##########################
 
+    /**
+     * @return string
+     */
     public static function tableName(): string
     {
         return '{{%shop_products}}';

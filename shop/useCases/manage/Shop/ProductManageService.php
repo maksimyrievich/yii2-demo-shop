@@ -41,6 +41,11 @@ class ProductManageService
         $this->transaction = $transaction;
     }
 
+    /**
+     * @param ProductCreateForm $form
+     * @return Product
+     * @throws \Exception
+     */
     public function create(ProductCreateForm $form): Product
     {
         $brand = $this->brands->get($form->brandId);
