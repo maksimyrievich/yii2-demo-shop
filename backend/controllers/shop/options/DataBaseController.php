@@ -16,6 +16,7 @@ use common\models\Db;
 class DatabaseController extends Controller
 {
     public $dumpPath = '@common/runtime/db/';
+
     public function actionIndex($path = null)
     {
         //Получаем массива путей к файлам с дампом БД (.sql)
@@ -37,14 +38,17 @@ class DatabaseController extends Controller
         $this->redirect('/shop/options/database/index');
     }
 
-    public function actionExport($path = null) {
-        $path = $path ? : $this->dumpPath;
+    public function actionExport($path = null)
+    {
+        $path = $path ?: $this->dumpPath;
         $model = new Db();
         //Метод экспортирует данные из БД в указанную папку
         $model->export($path);
         $this->redirect('/shop/options/database/index');
     }
-    public function actionDelete($path) {
+
+    public function actionDelete($path)
+    {
         $model = new Db();
         //Метод удаляет дамп БД
         $model->delete($path);
