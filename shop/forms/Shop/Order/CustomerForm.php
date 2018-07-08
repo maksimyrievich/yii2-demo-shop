@@ -6,14 +6,18 @@ use yii\base\Model;
 
 class CustomerForm extends Model
 {
+
+    public $familia;
+    public $imya;
+    public $otchestvo;
     public $phone;
-    public $name;
+    public $email;
 
     public function rules(): array
     {
         return [
-            [['phone', 'name'], 'required'],
-            [['phone', 'name'], 'string', 'max' => 255],
+            [['phone', 'familia','imya','otchestvo','email'], 'required'],
+            [['phone', 'familia','imya','otchestvo','email'], 'string', 'max' => 255],
         ];
     }
 }

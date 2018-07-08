@@ -111,36 +111,28 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $form = new ProductCreateForm();
-
         $form->price = new PriceForm();
         $form->quantity = new QuantityForm();
         $form->meta = new MetaForm();
         $form->categories = new CategoriesForm();
         $form->photos = new PhotosForm();
         $form->tags = new TagsForm();
-        $form->values = array_map(function (Characteristic $characteristic) {
-            return new ValueForm($characteristic);
-        }, Characteristic::find()->orderBy('sort')->all());
-
         if ($form->load(Yii::$app->request->post()) && $form->validate() &&
             $form->price->load(Yii::$app->request->post()) && $form->price->validate() &&
             $form->quantity->load(Yii::$app->request->post()) && $form->quantity->validate() &&
             $form->meta->load(Yii::$app->request->post()) && $form->meta->validate() &&
             $form->categories->load(Yii::$app->request->post()) && $form->categories->validate() &&
             $form->photos->load(Yii::$app->request->post()) && $form->photos->validate() &&
-            $form->tags->load(Yii::$app->request->post()) && $form->tags->validate() &&
-            $form->values->load(Yii::$app->request->post()) && $form->values->validate()
+            $form->tags->load(Yii::$app->request->post()) && $form->tags->validate()
         ) {
             try {
-                //Yii::$app->session->setFlash('info', 'Валидация формы ProductCreateForm() пройдена');
                 $form = $this->service->create($form);
-                return $this->redirect(['view']); //, 'id' => $product->id]
+                return $this->redirect(['index']);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
-
         return $this->render('create', [
             'model' => $form,
         ]);
@@ -152,7 +144,15 @@ class ProductController extends Controller
         $product = $this->findModel($id);
 
         $form = new ProductEditForm($product);
-        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+        //$form->meta = new MetaForm($product->meta);
+        //$form->categories = new CategoriesForm($product);
+        //$form->tags = new TagsForm($product);
+
+        if ($form->load(Yii::$app->request->post()) && $form->validate() //&&
+            //$form->meta->load(Yii::$app->request->post()) && $form->validate() &&
+            //$form->categories->load(Yii::$app->request->post()) && $form->validate() &&
+            //$form->tags->load(Yii::$app->request->post()) && $form->validate()
+        ) {
             try {
                 $this->service->edit($product->id, $form);
                 return $this->redirect(['view', 'id' => $product->id]);

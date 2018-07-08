@@ -3,12 +3,11 @@
 namespace shop\forms\manage\Shop\Product;
 
 use shop\entities\Shop\Brand;
-//use shop\entities\Shop\Characteristic;
+use shop\entities\Shop\Characteristic;
 use shop\entities\Shop\Product\Product;
-//use shop\forms\CompositeForm;
+use shop\forms\CompositeForm;
 use shop\forms\manage\MetaForm;
 use yii\helpers\ArrayHelper;
-use yii\base\Model;
 
 /**
  * @property PriceForm $price
@@ -19,7 +18,7 @@ use yii\base\Model;
  * @property TagsForm $tags
  * @property ValueForm[] $values
  */
-class ProductCreateForm extends Model
+class ProductCreateForm extends CompositeForm
 {
     public $brandId;
     public $code;
@@ -37,15 +36,15 @@ class ProductCreateForm extends Model
 
     public function __construct($config = [])
     {
-//        $this->price = new PriceForm();
-//        $this->quantity = new QuantityForm();
-//        $this->meta = new MetaForm();
-//        $this->categories = new CategoriesForm();
-//        $this->photos = new PhotosForm();
-//        $this->tags = new TagsForm();
-//        $this->values = array_map(function (Characteristic $characteristic) {
-//            return new ValueForm($characteristic);
-//        }, Characteristic::find()->orderBy('sort')->all());
+        //$this->price = new PriceForm();
+        //$this->quantity = new QuantityForm();
+        //$this->meta = new MetaForm();
+        //$this->categories = new CategoriesForm();
+        //$this->photos = new PhotosForm();
+        //$this->tags = new TagsForm();
+        $this->values = array_map(function (Characteristic $characteristic) {
+            return new ValueForm($characteristic);
+        }, Characteristic::find()->orderBy('sort')->all());
         parent::__construct($config);
     }
 
@@ -67,8 +66,8 @@ class ProductCreateForm extends Model
         return ArrayHelper::map(Brand::find()->orderBy('name')->asArray()->all(), 'id', 'name');
     }
 
-//    protected function internalForms(): array
-//    {
-//        return ['price', 'quantity', 'meta', 'photos', 'categories', 'tags', 'values'];
-//    }
+    protected function internalForms(): array
+    {
+        return ['price', 'quantity', 'meta', 'photos', 'categories', 'tags', 'values'];
+    }
 }

@@ -10,6 +10,7 @@ class CustomerForm extends Model
     public $phone;
     public $name;
 
+
     public function __construct(Order $order, array $config = [])
     {
         $this->phone = $order->customerData->phone;

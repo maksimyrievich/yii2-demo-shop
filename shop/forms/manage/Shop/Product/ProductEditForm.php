@@ -22,6 +22,11 @@ class ProductEditForm extends CompositeForm
     public $name;
     public $description;
     public $weight;
+    //Свойства хранящие формы
+    public $meta;
+    public $categories;
+    public $tags;
+    public $values;
 
     private $_product;
 

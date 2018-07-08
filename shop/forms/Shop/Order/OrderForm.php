@@ -11,11 +11,15 @@ use shop\forms\CompositeForm;
 class OrderForm extends CompositeForm
 {
     public $note;
+    public $delivery;
+    public $customer;
+    public $adress;
 
     public function __construct(int $weight, array $config = [])
     {
         $this->delivery = new DeliveryForm($weight);
         $this->customer = new CustomerForm();
+        $this->adress = new AdressForm();
         parent::__construct($config);
     }
 
@@ -28,6 +32,6 @@ class OrderForm extends CompositeForm
 
     protected function internalForms(): array
     {
-        return ['delivery', 'customer'];
+        return ['delivery', 'customer', 'adress'];
     }
 }

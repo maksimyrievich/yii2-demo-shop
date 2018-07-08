@@ -10,10 +10,12 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Checkout';
+$this->title = 'Оформление заказа';
 $this->params['breadcrumbs'][] = ['label' => 'Catalog', 'url' => ['/shop/catalog/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Shopping Cart', 'url' => ['/shop/cart/index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+
 ?>
 <div class="cabinet-index">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -76,16 +78,37 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin() ?>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">Customer</div>
-        <div class="panel-body">
-            <?= $form->field($model->customer, 'phone')->textInput() ?>
-            <?= $form->field($model->customer, 'name')->textInput() ?>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Ваши данные</div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel-body">
+                                <?= $form->field($model->customer, 'familia')->textInput() ?>
+                                <?= $form->field($model->customer, 'imya')->textInput() ?>
+                                <?= $form->field($model->customer, 'otchestvo')->textInput() ?>
+                                <?= $form->field($model->customer, 'phone')->textInput() ?>
+                                <?= $form->field($model->customer, 'email')->textInput() ?>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="panel-body">
+                                <?= $form->field($model->adress, 'country')->dropDownList(['0'=>'Англия','1'=>'Германия','2'=>'Российская федерация'], ['options'=>['2'=> ['selected'=>'true']]]) ?>
+                                <?= $form->field($model->adress, 'region')->textInput() ?>
+                                <?= $form->field($model->adress, 'town')->textInput() ?>
+                                <?= $form->field($model->adress, 'raion')->textInput() ?>
+                                <?= $form->field($model->adress, 'index')->textInput() ?>
+                                <?= $form->field($model->adress, 'street')->textInput() ?>
+                            </div>
+                        </div>
+                    </div>
+            </div>
         </div>
-    </div>
+
+
 
     <div class="panel panel-default">
-        <div class="panel-heading">Delivery</div>
+        <div class="panel-heading">Способ доставки</div>
         <div class="panel-body">
             <?= $form->field($model->delivery, 'method')->dropDownList($model->delivery->deliveryMethodsList(), ['prompt' => '--- Select ---']) ?>
             <?= $form->field($model->delivery, 'index')->textInput() ?>
@@ -105,6 +128,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <?php ActiveForm::end() ?>
+
+
+
+
 
 </div>
     
