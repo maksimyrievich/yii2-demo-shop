@@ -22,20 +22,30 @@ class SignupForm extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => User::class, 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => User::class, 'message' => 'Этот логин уже занят'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => User::class, 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => User::class, 'message' => 'Этот емайл адресс уже зарегистрирован'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
 
             ['phone', 'required'],
             ['phone', 'integer'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Логин',
+            'email' => 'Емайл',
+            'phone' => 'Телефон',
+            'password' => 'Пароль'
         ];
     }
 }

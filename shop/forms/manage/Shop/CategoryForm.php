@@ -18,6 +18,7 @@ class CategoryForm extends CompositeForm
     public $title;
     public $description;
     public $parentId;
+    public $meta;
 
     private $_category;
 

@@ -47,7 +47,7 @@ use yii\helpers\Url;
                 <?php $cost = $cart->getCost(); ?>
                 <table class="table table-bordered">
                     <tr>
-                        <td class="text-right"><strong>Sub-Total:</strong></td>
+                        <td class="text-right"><strong>Итого по прайсу:</strong></td>
                         <td class="text-right"><?= PriceHelper::format($cost->getOrigin()) ?></td>
                     </tr>
                     <?php foreach ($cost->getDiscounts() as $discount): ?>
@@ -57,15 +57,15 @@ use yii\helpers\Url;
                         </tr>
                     <?php endforeach; ?>
                     <tr>
-                        <td class="text-right"><strong>Total:</strong></td>
+                        <td class="text-right"><strong>Итого:</strong></td>
                         <td class="text-right"><?= PriceHelper::format($cost->getTotal()) ?></td>
                     </tr>
                 </table>
                 <p class="text-right"><a
-                        href="<?= Url::to(['/shop/cart/index']) ?>"><strong><i
-                                class="fa fa-shopping-cart"></i> View Cart</strong></a>&nbsp;&nbsp;&nbsp;<a
-                        href="/index.php?route=checkout/checkout"><strong><i
-                                class="fa fa-share"></i> Checkout</strong></a></p>
+                        href="<?= Html::encode(Url::to(['/shop/cart/index'])) ?>"><strong><i
+                                class="fa fa-shopping-cart"></i> Перейти в корзину</strong></a>&nbsp;&nbsp;&nbsp;<a
+                        href="<?= Html::encode(Url::to(['/shop/checkout/index']))  ?>"><strong><i
+                                class="fa fa-share"></i> Оформить заказ</strong></a></p>
             </div>
         </li>
     </ul>

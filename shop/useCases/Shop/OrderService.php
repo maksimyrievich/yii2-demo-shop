@@ -8,6 +8,7 @@ use shop\entities\Shop\Order\CustomerData;
 use shop\entities\Shop\Order\DeliveryData;
 use shop\entities\Shop\Order\Order;
 use shop\entities\Shop\Order\OrderItem;
+use shop\forms\Shop\Order\CustomerForm;
 use shop\forms\Shop\Order\OrderForm;
 use shop\repositories\Shop\DeliveryMethodRepository;
 use shop\repositories\Shop\OrderRepository;
@@ -41,7 +42,7 @@ class OrderService
         $this->transaction = $transaction;
     }
 
-    public function checkout($userId, OrderForm $form): Order
+    public function checkout($userId, CustomerForm $form): Order
     {
         $user = $this->users->get($userId);
 
@@ -62,19 +63,18 @@ class OrderService
         $order = Order::create(
             $user->id,
             new CustomerData(
-                $form->customer->phone,
-                $form->customer->name
+                $form->phone,
+                $form->imya
             ),
             $items,
             $this->cart->getCost()->getTotal(),
             $form->note
         );
-
         $order->setDeliveryInfo(
-            $this->deliveryMethods->get($form->delivery->method),
+            $this->deliveryMethods->get($form->method),
             new DeliveryData(
-                $form->delivery->index,
-                $form->delivery->address
+                $form->index,
+                $form->address
             )
         );
 

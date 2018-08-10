@@ -13,7 +13,7 @@ class UserRepository
     {
         $this->dispatcher = $dispatcher;
     }
-
+    //Возвращает юзера из базы данных или не возвращает
     public function findByUsernameOrEmail($value): ?User
     {
         return User::find()->andWhere(['or', ['username' => $value], ['email' => $value]])->one();
@@ -29,6 +29,7 @@ class UserRepository
         return $this->getBy(['id' => $id]);
     }
 
+    //Функция принимает токен, а возвращает юзера с таким токеном
     public function getByEmailConfirmToken($token): User
     {
         return $this->getBy(['email_confirm_token' => $token]);
@@ -78,11 +79,15 @@ class UserRepository
         $this->dispatcher->dispatchAll($user->releaseEvents());
     }
 
+    // Приватная функция, которая возвращает юзера из базы данных по входному аргументу ['поле'=>'значение']
     private function getBy(array $condition): User
     {
+        // Если из базы данных ничего не вернулось в результате запроса, то
         if (!$user = User::find()->andWhere($condition)->limit(1)->one()) {
+            // Кидаем исключение "Юзер не установлен"
             throw new NotFoundException('User not found.');
         }
+        //Иначе возвращаем найденного юзера
         return $user;
     }
 }

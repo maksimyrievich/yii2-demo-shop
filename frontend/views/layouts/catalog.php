@@ -5,6 +5,7 @@
 
 use frontend\widgets\Shop\CategoriesWidget;
 
+\frontend\assets\CatalogAsset::register($this);
 ?>
 <?php $this->beginContent('@frontend/views/layouts/main.php') ?>
 
@@ -12,7 +13,7 @@ use frontend\widgets\Shop\CategoriesWidget;
     <aside id="column-left" class="col-sm-3 hidden-xs">
         <?= CategoriesWidget::widget([
             'active' => $this->params['active_category'] ?? null
-        ]) ?>
+            , 'tpl' => 'accordion']) ?>
     </aside>
     <div id="content" class="col-sm-9">
         <?= $content ?>

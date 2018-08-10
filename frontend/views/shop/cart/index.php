@@ -8,8 +8,8 @@ use shop\helpers\WeightHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Shopping Cart';
-$this->params['breadcrumbs'][] = ['label' => 'Catalog', 'url' => ['/shop/catalog/index']];
+$this->title = 'Корзина';
+$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => ['/shop/catalog/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cabinet-index">
@@ -19,12 +19,12 @@ $this->params['breadcrumbs'][] = $this->title;
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <td class="text-center" style="width: 100px">Image</td>
-                    <td class="text-left">Product Name</td>
-                    <td class="text-left">Model</td>
-                    <td class="text-left">Quantity</td>
-                    <td class="text-right">Unit Price</td>
-                    <td class="text-right">Total</td>
+                    <td class="text-center" style="width: 100px">Изображение</td>
+                    <td class="text-left">Название</td>
+                    <td class="text-left">Модель</td>
+                    <td class="text-left">Количество</td>
+                    <td class="text-right">Цена</td>
+                    <td class="text-right">Всего</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php $cost = $cart->getCost() ?>
             <table class="table table-bordered">
                 <tr>
-                    <td class="text-right"><strong>Sub-Total:</strong></td>
+                    <td class="text-right"><strong>Итого по прайсу:</strong></td>
                     <td class="text-right"><?= PriceHelper::format($cost->getOrigin()) ?></td>
                 </tr>
                 <?php foreach ($cost->getDiscounts() as $discount): ?>
@@ -85,20 +85,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tr>
                 <?php endforeach; ?>
                 <tr>
-                    <td class="text-right"><strong>Total:</strong></td>
+                    <td class="text-right"><strong>Итого:</strong></td>
                     <td class="text-right"><?= PriceHelper::format($cost->getTotal()) ?></td>
                 </tr>
                 <tr>
-                    <td class="text-right"><strong>Weight:</strong></td>
+                    <td class="text-right"><strong>Вес заказа:</strong></td>
                     <td class="text-right"><?= WeightHelper::format($cart->getWeight()) ?></td>
                 </tr>
             </table>
         </div>
     </div>
     <div class="buttons clearfix">
-        <div class="pull-left"><a href="<?= Url::to('/shop/catalog/index') ?>" class="btn btn-default">Continue Shopping</a></div>
+        <div class="pull-left"><a href="<?= Url::to('/shop/catalog/index') ?>" class="btn btn-primary">Продолжить покупки</a></div>
         <?php if ($cart->getItems()): ?>
-            <div class="pull-right"><a href="<?= Url::to('/shop/checkout/index') ?>" class="btn btn-primary">Checkout</a></div>
+            <div class="pull-right"><a href="<?= Url::to('/shop/checkout/index') ?>" class="btn btn-success">Оформить заказ</a></div>
         <?php endif; ?>
     </div>
 </div>

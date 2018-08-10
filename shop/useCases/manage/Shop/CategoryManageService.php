@@ -27,6 +27,7 @@ class CategoryManageService
             $form->slug,
             $form->title,
             $form->description,
+            $form->parentId == 1 ? 0 : $form->parentId,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,
@@ -47,6 +48,7 @@ class CategoryManageService
             $form->slug,
             $form->title,
             $form->description,
+            $form->parentId == 1 ? 0 : $form->parentId,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,

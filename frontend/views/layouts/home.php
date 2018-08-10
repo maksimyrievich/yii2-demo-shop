@@ -5,6 +5,7 @@
 
 use frontend\widgets\Blog\LastPostsWidget;
 use frontend\widgets\Shop\FeaturedProductsWidget;
+use yii\helpers\Url;
 
 \frontend\assets\OwlCarouselAsset::register($this);
 
@@ -16,11 +17,11 @@ use frontend\widgets\Shop\FeaturedProductsWidget;
         <div id="slideshow0" class="owl-carousel" style="opacity: 1;">
             <div class="item">
                 <a href="index.php?route=product/product&amp;path=57&amp;product_id=49"><img
-                            src="http://static.shop.dev/cache/banners/iPhone6-1140x380.jpg"
+                            src="<?=Url::to('@static/cache/banners/iPhone6-1140x380.jpg')?>"
                             alt="iPhone 6" class="img-responsive"/></a>
             </div>
             <div class="item">
-                <img src="http://static.shop.dev/cache/banners/MacBookAir-1140x380.jpg"
+                <img src="<?=Url::to('@static/cache/banners/MacBookAir-1140x380.jpg')?>"
                      alt="MacBookAir" class="img-responsive"/>
             </div>
         </div>
@@ -38,47 +39,47 @@ use frontend\widgets\Shop\FeaturedProductsWidget;
 
         <div id="carousel0" class="owl-carousel">
             <div class="item text-center">
-                <img src="http://static.shop.dev/cache/manufacturers/nfl-130x100.png" alt="NFL"
+                <img src="<?=Url::to('@static/cache/manufacturers/nfl-130x100.png')?>" alt="NFL"
                      class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="http://static.shop.dev/cache/manufacturers/redbull-130x100.png"
+                <img src="<?=Url::to('@static/cache/manufacturers/redbull-130x100.png')?>"
                      alt="RedBull" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="http://static.shop.dev/cache/manufacturers/sony-130x100.png" alt="Sony"
+                <img src="<?=Url::to('@static/cache/manufacturers/sony-130x100.png')?>" alt="Sony"
                      class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="http://static.shop.dev/cache/manufacturers/cocacola-130x100.png"
+                <img src="<?=Url::to('@static/cache/manufacturers/cocacola-130x100.png')?>"
                      alt="Coca Cola" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="http://static.shop.dev/cache/manufacturers/burgerking-130x100.png"
+                <img src="<?=Url::to('@static/cache/manufacturers/burgerking-130x100.png')?>"
                      alt="Burger King" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="http://static.shop.dev/cache/manufacturers/canon-130x100.png" alt="Canon"
+                <img src="<?=Url::to('@static/cache/manufacturers/canon-130x100.png')?>" alt="Canon"
                      class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="http://static.shop.dev/cache/manufacturers/harley-130x100.png"
+                <img src="<?=Url::to('@static/cache/manufacturers/harley-130x100.png')?>"
                      alt="Harley Davidson" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="http://static.shop.dev/cache/manufacturers/dell-130x100.png" alt="Dell"
+                <img src="<?=Url::to('@static/cache/manufacturers/dell-130x100.png')?>" alt="Dell"
                      class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="http://static.shop.dev/cache/manufacturers/disney-130x100.png"
+                <img src="<?=Url::to('@static/cache/manufacturers/disney-130x100.png')?>"
                      alt="Disney" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="http://static.shop.dev/cache/manufacturers/starbucks-130x100.png"
+                <img src="<?=Url::to('@static/cache/manufacturers/starbucks-130x100.png')?>"
                      alt="Starbucks" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="http://static.shop.dev/cache/manufacturers/nintendo-130x100.png"
+                <img src="<?=Url::to('@static/cache/manufacturers/nintendo-130x100.png')?>"
                      alt="Nintendo" class="img-responsive"/>
             </div>
         </div>

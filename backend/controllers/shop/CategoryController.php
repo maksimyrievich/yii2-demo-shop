@@ -61,6 +61,7 @@ class CategoryController extends Controller
     /**
      * @return mixed
      */
+    //Сохранить, создать категорию. view: /backend/view/shop/category/index
     public function actionCreate()
     {
         $form = new CategoryForm();

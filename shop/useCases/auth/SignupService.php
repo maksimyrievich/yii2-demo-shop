@@ -16,25 +16,24 @@ class SignupService
     private $roles;
     private $transaction;
 
-    public function __construct(
-        UserRepository $users,
-        RoleManager $roles,
-        TransactionManager $transaction
-    )
+    public function __construct(UserRepository $users, RoleManager $roles, TransactionManager $transaction)
     {
         $this->users = $users;
         $this->roles = $roles;
         $this->transaction = $transaction;
     }
-
+    //Сервисная функция регистрации пользователя в базе данных. В качестве аргумента может принимать форму
+    //в принципе любую. Ничего не возвращает
     public function signup(SignupForm $form): void
     {
+        //Создаем нового юзера заполняем ему все поля и свойства
         $user = User::requestSignup(
             $form->username,
             $form->email,
             $form->phone,
             $form->password
         );
+        //
         $this->transaction->wrap(function () use ($user) {
             $this->users->save($user);
             $this->roles->assign($user->id, Rbac::ROLE_USER);
@@ -46,7 +45,9 @@ class SignupService
         if (empty($token)) {
             throw new \DomainException('Empty confirm token.');
         }
+        //Возвращаем юзера с таким токеном в переменную юзер
         $user = $this->users->getByEmailConfirmToken($token);
+        //
         $user->confirmSignup();
         $this->users->save($user);
     }

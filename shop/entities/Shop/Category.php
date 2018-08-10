@@ -17,6 +17,7 @@ use yii\db\ActiveRecord;
  * @property integer $lft
  * @property integer $rgt
  * @property integer $depth
+ * @property integer $parent_id
  * @property Meta $meta
  *
  * @property Category $parent
@@ -30,7 +31,8 @@ class Category extends ActiveRecord
 {
     public $meta;
 
-    public static function create($name, $slug, $title, $description, Meta $meta): self
+
+    public static function create($name, $slug, $title, $description, $parent_id, Meta $meta): self
     {
         $category = new static();
         $category->name = $name;
@@ -38,16 +40,18 @@ class Category extends ActiveRecord
         $category->title = $title;
         $category->description = $description;
         $category->meta = $meta;
+        $category->parent_id = $parent_id;
         return $category;
     }
 
-    public function edit($name, $slug, $title, $description, Meta $meta): void
+    public function edit($name, $slug, $title, $description, $parent_id, Meta $meta): void
     {
         $this->name = $name;
         $this->slug = $slug;
         $this->title = $title;
         $this->description = $description;
         $this->meta = $meta;
+        $this->parent_id = $parent_id;
     }
 
     public function getSeoTitle(): string
@@ -65,11 +69,12 @@ class Category extends ActiveRecord
         return '{{%shop_categories}}';
     }
 
+
     public function behaviors(): array
     {
         return [
-            MetaBehavior::className(),
             NestedSetsBehavior::className(),
+            MetaBehavior::className(),
         ];
     }
 

@@ -349,7 +349,7 @@ footer h5 {
 }
 .breadcrumb > li {
 	text-shadow: 0 1px 0 #FFF;
-	padding: 0 20px;
+	padding: 0 15px;
 	position: relative;
 	white-space: nowrap;
 }
@@ -365,13 +365,19 @@ footer h5 {
 	right: -5px;
 	width: 26px;
 	height: 26px;
-	border-right: 1px solid #DDD;
-	border-bottom: 1px solid #DDD;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 	-webkit-transform: rotate(-45deg);
 	-moz-transform: rotate(-45deg);
 	-o-transform: rotate(-45deg);
 	transform: rotate(-45deg);
 }
+
+.breadcrumb > li:last-child:after {
+	border-right: 0px ;
+	border-bottom: 0px ;
+}
+
 .pagination {
 	margin: 0;
 }
@@ -839,3 +845,31 @@ h2.price {
 #comments .comment-item .comment-item .comment-item .comment-item .comment-item .margin {
 	margin-left: 0;
 }
+
+div.panel-body > li > a{
+	text-decoration: none;
+}
+/*Стили для аккордиона категорий на странице /frontend/views/layouts/catalog.php */
+a.active{
+	font-weight: bold;
+}
+a.dcjq-parent:before{
+	content: '\271A';
+	color:red;
+}
+a.active:before{
+	content: '\003E';
+	color:red;
+}
+/* конец стилей для аккордиона категорий на странице /frontend/views/layouts/catalog.php */
+
+/*Стили для таблицы способов доставки на странице /frontend/views/shop/checkout/index.php */
+tbody > tr:hover {
+	background-color: #f5f5f5;
+}
+/* конец стилей для таблицы способов доставки на странице /frontend/views/shop/checkout/index.php */
+
+
+
+
+

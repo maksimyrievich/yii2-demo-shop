@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Maksim
@@ -9,8 +10,12 @@
 namespace shop\entities\Shop\options;
 
 use yii\db\ActiveRecord;
-use yii\helpers\ArrayHelper;
 
+/**
+ * @property string $iso2
+ * @property string $country
+ * @property integer $publish
+ */
 class Country extends ActiveRecord
 {
     public static function tableName()

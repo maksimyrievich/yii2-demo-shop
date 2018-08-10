@@ -8,10 +8,11 @@ return [
     'baseUrl' => '',
     'enablePrettyUrl' => true,
     'showScriptName' => false,
-    'cache' => false,
+    'cache' => true,
     'rules' => [
         '' => 'site/index',
         'contact' => 'contact/index',
+        //Смотри контроллер frontend/controllers/auth/SignupController.php
         'signup' => 'auth/signup/request',
         'signup/<_a:[\w-]+>' => 'auth/signup/<_a>',
         '<_a:login|logout>' => 'auth/auth/<_a>',

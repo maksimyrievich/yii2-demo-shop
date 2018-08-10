@@ -6,7 +6,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Blog';
+$this->title = 'О компании';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

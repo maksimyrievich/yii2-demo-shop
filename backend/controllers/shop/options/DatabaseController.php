@@ -54,4 +54,9 @@ class DatabaseController extends Controller
         $model->delete($path);
         $this->redirect('/shop/options/database/index');
     }
+
+
+
+
+
 }

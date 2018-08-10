@@ -28,7 +28,10 @@ class CategoryUrlRule extends Object implements UrlRuleInterface
 
     public function parseRequest($manager, $request)
     {
-        if (preg_match('#^' . $this->prefix . '/(.*[a-z])$#is', $request->pathInfo, $matches)) {
+        // preg_match находит совпадения в строке "pathInfo" с образцом "паттерном", если находит помещает все вхождения
+        // в массив matches[1] и ворачивает true.
+        if (preg_match('#^' . $this->prefix . '/(.*[a-z0-9])$#is', $request->pathInfo, $matches)) {
+            //Помещаем найденный URL в переменную
             $path = $matches['1'];
 
             $result = $this->cache->getOrSet(['category_route', 'path' => $path], function () use ($path) {

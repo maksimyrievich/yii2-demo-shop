@@ -11,13 +11,13 @@ use yii\grid\GridView;
 /* @var $searchModel backend\forms\Shop\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Products';
+$this->title = 'Товары';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
     <p>
-        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать товар', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <div class="box">

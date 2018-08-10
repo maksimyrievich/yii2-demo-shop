@@ -65,6 +65,9 @@ class User extends ActiveRecord implements AggregateRoot
         $this->updated_at = time();
     }
 
+    // Данная функция создает нового юзера, заполняет у этого юзера все свойства этого юзера. Часть данных о юзере
+    // передается этой функции в качестве аргументов, а часть свойств функция присваивает сама. Так сделано для того,
+    // что бы не забыть часть параметров занести в свойства этого юзера
     public static function requestSignup(string $username, string $email, string $phone, string $password): self
     {
         $user = new User();
@@ -80,13 +83,19 @@ class User extends ActiveRecord implements AggregateRoot
         return $user;
     }
 
+    //Данная функция выполняет необходимые действия после подтверждения пользователем своего емайла
     public function confirmSignup(): void
     {
+        //Если текущий юзер активирован, то..
         if (!$this->isWait()) {
+            //Выдаем исключение "Юзер ожидает активации"
             throw new \DomainException('User is already active.');
         }
+        // Иначе меняем ему статус на активированого пользователя
         $this->status = self::STATUS_ACTIVE;
+        // Сбрасываем токен подтверждения
         $this->email_confirm_token = null;
+        // Записываем событие текущий юзер подтвержден
         $this->recordEvent(new UserSignUpConfirmed($this));
     }
 
@@ -153,7 +162,8 @@ class User extends ActiveRecord implements AggregateRoot
         $this->setPassword($password);
         $this->password_reset_token = null;
     }
-
+    // Функция возвращает true если у текущего юзера в базе данных статус "ожидает активации аккаунта"
+    // иначе -false
     public function isWait(): bool
     {
         return $this->status === self::STATUS_WAIT;

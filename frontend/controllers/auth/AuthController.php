@@ -24,7 +24,9 @@ class AuthController extends Controller
      */
     public function actionLogin()
     {
+        //Если пользователь гость, то...
         if (!Yii::$app->user->isGuest) {
+            //Возвращаемся на домашнюю страницу
             return $this->goHome();
         }
 

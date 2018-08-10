@@ -8,6 +8,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\forms\Shop\BrandSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $model \shop\entities\Shop\options\Country*/
 
 $this->title = 'Список стран';
 $this->params['breadcrumbs'][] = ['label'=>'Options','url' => ['/shop/options/list']];

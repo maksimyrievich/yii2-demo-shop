@@ -8,7 +8,7 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
-$this->title = 'Wish List';
+$this->title = 'Мои пожелания';
 $this->params['breadcrumbs'][] = ['label' => 'Cabinet', 'url' => ['cabinet/default/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

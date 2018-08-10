@@ -12,7 +12,7 @@ use yii\helpers\Json;
 class MetaBehavior extends Behavior
 {
     public $attribute = 'meta';
-    public $jsonAttribute = 'meta_json';
+    public $jsonAttribute = '{meta_json}';
 
     public function events(): array
     {

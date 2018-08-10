@@ -21,15 +21,8 @@ class CatalogController extends Controller
     private $brands;
     private $tags;
 
-    public function __construct(
-        $id,
-        $module,
-        ProductReadRepository $products,
-        CategoryReadRepository $categories,
-        BrandReadRepository $brands,
-        TagReadRepository $tags,
-        $config = []
-    )
+    public function __construct($id, $module, ProductReadRepository $products, CategoryReadRepository $categories,
+        BrandReadRepository $brands, TagReadRepository $tags, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->products = $products;
@@ -43,6 +36,7 @@ class CatalogController extends Controller
      */
     public function actionIndex()
     {
+        //Возвращаем все активные продукты в виде "датапровайдера" и передаем ее в модель
         $dataProvider = $this->products->getAll();
         $category = $this->categories->getRoot();
 

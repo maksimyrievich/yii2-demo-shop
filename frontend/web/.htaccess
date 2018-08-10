@@ -1,10 +1,20 @@
-Order Allow,Deny
-Allow from all
 
-AddDefaultCharset utf-8
-
-RewriteEngine on
 RewriteBase /
+RewriteCond %{HTTP_HOST} ^(www\.)?backend.d927138x.beget.tech$ [NC]
+RewriteCond %{REQUEST_URI} !^/backend
+RewriteRule ^(.*)$ backend/index.php/$1 [L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?static\.d927138x\.beget\.tech$ [NC]
+RewriteCond %{REQUEST_URI} !^/static
+RewriteRule ^(.*)$ static/$1 [L]
+
+Options +FollowSymLinks
+IndexIgnore */*
+RewriteEngine on
+# if a directory or a file exists, use it directly
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+# otherwise forward it to index.php
 RewriteRule . index.php
+
+

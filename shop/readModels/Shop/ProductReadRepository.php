@@ -44,9 +44,12 @@ class ProductReadRepository
         return Product::find()->alias('p')->active('p')->with('mainPhoto', 'brand')->each();
     }
 
+    //Возвращает все продукты в виде дата провайдер интерфейса
     public function getAll(): DataProviderInterface
     {
+        //Формируем запрос - возвратить все активные продукты из базы данных
         $query = Product::find()->alias('p')->active('p')->with('mainPhoto');
+        //И возвращаем дата провайдер с нужными настройками
         return $this->getProvider($query);
     }
 
@@ -86,6 +89,7 @@ class ProductReadRepository
         return Product::find()->active()->andWhere(['id' => $id])->one();
     }
 
+    //Функция настройки провайдера данных для вывода продуктов
     private function getProvider(ActiveQuery $query): ActiveDataProvider
     {
         return new ActiveDataProvider([
@@ -112,7 +116,7 @@ class ProductReadRepository
                 ],
             ],
             'pagination' => [
-                'pageSizeLimit' => [15, 100],
+                'pageSizeLimit' => [3, 100],
             ]
         ]);
     }
