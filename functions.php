@@ -11,3 +11,30 @@
 function debug($arr){
     echo '<pre>' . print_r($arr, true) . '</pre>';
 }
+
+function logfile($textLog){
+    $file = __DIR__ .'/logFile.txt';
+    $text = "\n". date('Y-m-d H:i:s') ." -> ";      //Добавляем актуальную дату
+    $text .= $textLog;                          //Выводим переданную переменную
+    $fOpen = fopen($file,'a+');
+    fwrite($fOpen, $text);
+    fclose($fOpen);
+}
+
+function logfileArrayJson($textLog){
+    $file = __DIR__ .'/logFile.txt';
+    $text = "\n". date('Y-m-d H:i:s') ." -> ";      //Добавляем актуальную дату
+    $text .= json_encode($textLog);                          //Выводим переданную переменную
+    $fOpen = fopen($file,'a+');
+    fwrite($fOpen, $text);
+    fclose($fOpen);
+}
+
+function logfileArraySerrial($textLog){
+    $file = __DIR__ .'/logFile.txt';
+    $text = "\n". date('Y-m-d H:i:s') ." -> ";      //Добавляем актуальную дату
+    $text .= serialize($textLog);                          //Выводим переданную переменную
+    $fOpen = fopen($file,'a+');
+    fwrite($fOpen, $text);
+    fclose($fOpen);
+}

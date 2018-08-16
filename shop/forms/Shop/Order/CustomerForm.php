@@ -13,51 +13,44 @@ use shop\helpers\PriceHelper;
 class CustomerForm extends Model
 {
     public $note;
-    public $method;
-    public $address;
+//    public $method;
+//    public $address;
 
-    private $_weight;
+    public $weight;
 
-    public $choice; //выбор кому отправлять
-    public $email; //емайл покупателя
-    public $phone; //телефон покупателя
     public $imya; //Фамилия имя отчество получателя
     public $country;//страна получателя
     public $town;   //город/населённый пункт
+    public $townru; //город/населённый пункт России
     public $street; //улица
     public $indexru;  //почтовый индекс для России
     public $index;  //почтовый индекс
-    public $recipientphone; //Телефон получателя
+    public $phone; //Телефон получателя
 
     public function __construct(int $weight, array $config = [])
     {
-        $this->_weight = $weight;
+        $this->weight = $weight;
         parent::__construct($config);
     }
 
     public function rules(): array
     {
         return [
-            [['choice'], 'boolean'],
-            [['email'], 'unique', 'targetClass' => User::class, 'message' => 'Покупатель с таким емайлом уже зарегистрирован'],
-            [['phone'], 'unique', 'targetClass' => User::class, 'message' => 'Покупатель с таким телефоном уже зарегистрирован'],
-            [['imya', 'country', 'town',  'street', 'indexru', 'index', 'recipientphone','note','method','address'], 'string'],
+            [['imya', 'country', 'town',  'street', 'indexru', 'index', 'phone', 'townru'], 'string'],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'choice' => 'Отправить этот заказ другу?',
             'country' => 'Страна',
             'town' => 'Город или Населенный пункт, Район, Область',
+            'townru' => 'Город или Населенный пункт',
             'index' => 'Почтовый индекс',
             'indexru' => 'Почтовый индекс',
             'street' => 'Улица, дом, квартира',
             'imya' => 'Фамилия Имя Отчество',
-            'phone' => 'Ваш телефон',
-            'email' => 'Ваш емайл',
-            'recipientphone' => 'Телефон получателя',
+            'phone' => 'Телефон',
 
         ];
     }

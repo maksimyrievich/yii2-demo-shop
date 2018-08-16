@@ -110,22 +110,34 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin(['id' => 'customer-form','enableClientValidation' => false,]) ?>
         <div class="panel panel-default" id="two">
-            <div class="panel-heading accordion-two">Адрес доставки
+            <div class="panel-heading accordion-two">Адрес получателя
                 <div class="symb"></div>
             </div>
                 <div class="panel-body panel-two">
-                    <?= $form->field($model, 'choice')->checkbox()?>
                     <div class="row">
-                        <div class="col-lg-6">
-                            <h3>Покупатель</h3>
-                            <?= $form->field($model, 'email')->textInput() ?>
-                            <?= $form->field($model, 'phone',['addon' => ['prepend' => ['content'=>'+']]]) ?>
-
-                        </div>
-                        <div class="col-lg-6">
-                            <h3 class="recipient">Получатель заказа</h3>
-                            <?= $form->field($model, 'imya')->textInput() ?>
+                        <div class="col-lg-5">
                             <?= $form->field($model, 'country')->dropDownList($model->countryList()) ?>
+                            <?= $form->field($model, 'town')->textInput()?>
+                            <?= $form->field($model, 'townru')->widget(Select2::classname(), [
+                                'initValueText' => [$tmp->pindex => $tmp->city], // set the initial display text
+                                'options' => [],
+                                'theme' => Select2::THEME_BOOTSTRAP,
+                                'pluginOptions' => [
+                                    'allowClear' => false,
+                                    'minimumInputLength' => 3,
+                                    'language' => [
+                                        'errorLoading' => new JsExpression("function () { return 'Нет результата ...'; }"),
+                                        'inputTooShort' => new JsExpression("function () { return 'Введите цифры индекса...'; }"),
+                                        'searching' => new JsExpression("function () { return 'Поиск ...'; }"),
+                                    ],
+                                    'ajax' => [
+                                        'url' => Url::to(['/shop/checkout/citylist']),
+                                        'dataType' => 'json',
+                                        'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                                    ],
+                                ],
+                            ]);?>
+                            <?= $form->field($model, 'street')->textInput() ?>
                             <?= $form->field($model, 'index')->textInput() ?>
                             <?= $form->field($model, 'indexru')->widget(Select2::classname(), [
                                 //'initValueText' => $model->adress->countryInit(), // set the initial display text
@@ -146,23 +158,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ],
                                 ],
                             ]);?>
-                            <?= $form->field($model, 'street')->textInput() ?>
-                            <?= $form->field($model, 'town')->textInput()?>
-                            <?= $form->field($model, 'recipientphone',['addon' => ['prepend' => ['content'=>'+']]]) ?>
-                        </div>
-                        <div class="panel-body form-group" style="margin-top: 40px; text-align:left">
-                            <?= Html::Button('Продолжить',['class'=> 'btn btn-success btn-one','id'=>'customerform-submit'])?>
+                            <?= $form->field($model, 'imya')->textInput() ?>
+                            <?= $form->field($model, 'phone',['addon' => ['prepend' => ['content'=>'+']]]) ?>
+                            <div class="panel-body" style=" text-align:left">
+                                <?= Html::Button('Продолжить',['class'=> 'btn btn-success btn-one','id'=>'customerform-submit'])?>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
     <div class="panel panel-default" id="three">
         <div class="panel-heading accordion-three">Cпособ доставки <span class="symb"></span></div>
         <div id='conte' class="panel-body panel-three ">
-           <!-- <?= $form->field($model, 'method')->dropDownList($model->deliveryMethodsList()) ?>
-            <?= $form->field($model, 'index')->textInput() ?>
-            <?= $form->field($model, 'address')->textarea(['rows' => 3]) ?> -->
+
             <div>
                 <table class="table">
                     <thead>
@@ -181,11 +191,28 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </span>
                             </td>
                             <td>
-                                <span id="edost_logo"><img src="http://propylen.ru/components/com_jshopping/shippings/edost/assets/logos/2.gif"></span>
+                                <span id="edost_logo"><img src="<?= Html::encode(Url::to('@static/delivery_img/russian_post.gif')) ?>"></span>
                                 <span id="edost_title"> Почта России (наземная посылка)</span>
                             </td>
                             <td>
                                 <span id="edost_price">509.00 руб.</span>
+                            </td>
+                            <td>
+                                <span id="edost_delivery">11-21 день</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span id="edost_input">
+                                    <input id="shipping_id" type="radio" name="shipping_id" value="e2s">
+                                </span>
+                            </td>
+                            <td>
+                                <span id="edost_logo"><img src="<?= Html::encode(Url::to('@static/delivery_img/russian_post.gif')) ?>"></span>
+                                <span id="edost_title"> Почта России (наложенным платежом)</span>
+                            </td>
+                            <td>
+                                <span id="edost_price">511.00 руб.</span>
                             </td>
                             <td>
                                 <span id="edost_delivery">11-21 день</span>
@@ -198,7 +225,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </span>
                             </td>
                             <td>
-                                <span id="edost_logo"><img src="http://propylen.ru/components/com_jshopping/shippings/edost/assets/logos/48.gif"></span>
+                                <span id="edost_logo"><img src="<?= Html::encode(Url::to('@static/delivery_img/jel_dor_ekspediciya.gif')) ?>"></span>
                                 <span id="edost_title"> ЖелДорЭкспедиция (до подъезда)</span>
                             </td>
                             <td>
@@ -215,8 +242,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </span>
                             </td>
                             <td>
-                                <span id="edost_logo"><img src="http://propylen.ru/components/com_jshopping/shippings/edost/assets/logos/49.gif"></span>
-                                <span id="edost_title">ПЭК (до подъезда)</span>
+                                <span id="edost_logo"><img src="<?= Html::encode(Url::to('@static/delivery_img/pek.gif')) ?>"></span>
+                                <span id="edost_title"> ПЭК (до подъезда)</span>
                             </td>
                             <td>
                                 <span id="edost_price">1 376.00 руб.</span>
@@ -232,8 +259,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </span>
                             </td>
                             <td>
-                                <span id="edost_logo"><img src="http://propylen.ru/components/com_jshopping/shippings/edost/assets/logos/51.gif"></span>
-                                <span id="edost_title">Деловые линии (до подъезда)</span>
+                                <span id="edost_logo"><img src="<?= Html::encode(Url::to('@static/delivery_img/delovie_linii.gif')) ?>"></span>
+                                <span id="edost_title"> Деловые линии (до подъезда)</span>
                             </td>
                             <td>
                                 <span id="edost_price">1 545.00 руб.</span>
@@ -249,25 +276,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </span>
                             </td>
                             <td>
-                                <span id="edost_logo"><img src="http://propylen.ru/components/com_jshopping/shippings/edost/assets/logos/2.gif"></span>
-                                <span id="edost_title">Почта России (наземная посылка со страховкой)</span>
-                            </td>
-                            <td>
-                                <span id="edost_price">511.00 руб.</span>
-                            </td>
-                            <td>
-                                <span id="edost_delivery">11-21 день</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span id="edost_input">
-                                    <input id="shipping_id" type="radio" name="shipping_id" value="e2s">
-                                </span>
-                            </td>
-                            <td>
-                                <span id="edost_logo"><img src="http://propylen.ru/components/com_jshopping/shippings/edost/assets/logos/2.gif"></span>
-                                <span id="edost_title">Почта России (наземная посылка со страховкой)</span>
+                                <span id="edost_logo"><img src="<?= Html::encode(Url::to('@static/delivery_img/russian_post.gif')) ?>"></span>
+                                <span id="edost_title"> Почта России (наземная посылка со страховкой)</span>
                             </td>
                             <td>
                                 <span id="edost_price">511.00 руб.</span>
@@ -279,7 +289,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tbody>
                 </table>
             </div>
-            <div class="panel-body form-group" style="text-align:left">
+            <div class="panel-body" style="text-align:left">
                 <?= Html::Button('Продолжить',['class'=> 'btn btn-success btn-one','id'=>'customerform-submit'])?>
             </div>
         </div>

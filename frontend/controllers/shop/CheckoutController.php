@@ -3,16 +3,19 @@
 namespace frontend\controllers\shop;
 
 use shop\cart\Cart;
-
+use shop\services\delivery\russianpost\RussianPost;
 use shop\forms\Shop\Order\CustomerForm;
 use shop\repositories\UserRepository;
 use shop\useCases\Shop\OrderService;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\db\Query;
 use shop\entities\Shop\options\Cities;
 use yii\web\Response;
+
+
 
 class CheckoutController extends Controller
 {
@@ -69,27 +72,19 @@ class CheckoutController extends Controller
             }
 
             $session = Yii::$app->session;
-            if (!(Yii::$app->user->isGuest)){
-                $user = $this->user->get(Yii::$app->user->id);
-                $form->email = $user->email;
-                $form->phone = $user->phone;
-            }else {
-                $form->choice = $session['user.choice'];
-                $form->email = $session['user.email'];
-                $form->phone = $session['user.phone'];
-                $form->imya = $session['user.imya'];
-                $form->country = $session['user.country'];
-                $form->town = $session['user.town'];
-                $form->street = $session['user.street'];
-                $form->indexru = $session['user.indexru'];
-                $form->index = $session['user.index'];
-                $form->recipientphone = $session['user.recipientphone'];
-            }
-
+            $tmp = $session['user.townru'];
+            $form->imya = $session['user.imya'];
+            $form->country = $session['user.country'];
+            $form->town = $session['user.town'];
+            $form->street = $session['user.street'];
+            $form->indexru = $session['user.indexru'];
+            $form->index = $session['user.index'];
+            $form->phone = $session['user.phone'];
 
             return $this->render('index', [
                 'cart' => $this->cart,
                 'model' => $form,
+                'tmp' => $tmp
             ]);
         }else{
             Yii::$app->session->setFlash('error', 'Ваша корзина пуста');
@@ -108,13 +103,13 @@ class CheckoutController extends Controller
             $query->select('pindex as id, city as text')
                 ->from('postcalc_light_cities')
                 ->where(['like', 'city', $q.'%', false])
-                ->limit(5);
+                ->limit(20);
             $command = $query->createCommand();
             $data = $command->queryAll();
             $out['results'] = array_values($data);
         }
         elseif ($id > 0) {
-            $out['results'] = ['id' => $id, 'text' => Cities::findOne($id)];
+            $out['results'] = ['id' => $id, 'text' => Cities::findOne(['pindex' => $id])->city];
         }
         return $out;
     }
@@ -129,7 +124,7 @@ class CheckoutController extends Controller
             $query->select('pindex as id, opsname as text')
                 ->from('postcalc_light_post_indexes')
                 ->where(['like', 'pindex', $q.'%', false])
-                ->limit(5);
+                ->limit(20);
             $command = $query->createCommand();
             $data = $command->queryAll();
             $out['results'] = array_values($data);
@@ -166,24 +161,34 @@ class CheckoutController extends Controller
 
         if($form->load(Yii::$app->request->post()) && $form->validate())
         {
+            $tmp = Cities::findOne(['pindex' => $form->townru]);
             $session = Yii::$app->session;
             $session->open();
-            $session['user.choice'] = $form->choice;
-            $session['user.email'] = $form->email;
-            $session['user.phone'] = $form->phone;
             $session['user.imya'] = $form->imya;
             $session['user.country'] = $form->country;
             $session['user.town'] = $form->town;
+            $session['user.townru'] = $tmp;
             $session['user.street'] = $form->street;
             $session['user.indexru'] = $form->indexru;
             $session['user.index'] = $form->index;
-            $session['user.recipientphone'] = $form->recipientphone;
+            $session['user.phone'] = $form->phone;
         }
+
+
+        // Обращаемся к функции getPostcalc
+        $temp = new RussianPost();
+        $arrResponse = $temp->postcalc_request('413860',"413801", 1000, 0, 'RU');
+
+
+
+
+
 
         Yii::$app->response->format = Response::FORMAT_JSON;
         return ['form' =>   ['error' => ['all' => $form->hasErrors() ? 1 : 0 ,
                                          'email' => ['bool' => $form->hasErrors('email') ? 1 : 0,
-                                                     'text' => $form->getFirstError('email')
+                                                     'text' => $form->getFirstError('email'),
+                                                     'ru_post' => $arrResponse
                                                     ],
                                          'phone' => [$form->hasErrors('phone') ? 1 : 0,
                                                      'bool' => $form->hasErrors('phone') ? 1 : 0,
