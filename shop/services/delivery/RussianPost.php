@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\services\delivery\russianpost;
+namespace shop\services\delivery;
 
 use Yii;
 

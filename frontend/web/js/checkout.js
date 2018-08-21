@@ -12,28 +12,31 @@ $(document).ready(function(){
     $("div#two").addClass('panel-danger');
     $("div#three").addClass('panel-danger');
     $('.field-customerform-country').addClass('required ');
+    $('.field-customerform-town').addClass('required');
+    $('.field-customerform-townru').addClass('required');
     $('.field-customerform-imya').addClass('required');
     $('.field-customerform-street').addClass('required');
+    $('.field-customerform-index').addClass('required');
     $('.field-customerform-indexru').addClass('required');
-
+    $('.field-customerform-phone').addClass('required');
 
     //Если в поле страна выбрана Россия, то...
     if($("#customerform-country").val() === 'RU'){
         //Скрываем поле "Город" для других стран
-        $('.field-customerform-town').hide().addClass('required has-success');
+        $('.field-customerform-town').hide().addClass('has-success');
         //Показываем поле "Город" для России
-        $('.field-customerform-townru').show().addClass('required');
+        $('.field-customerform-townru').show();
         //Скрываем поле "Индекс" для других стран
-        $('.field-customerform-index').hide().addClass('required has-success');
+        $('.field-customerform-index').hide().addClass('has-success');
     }else{  // иначе...
         //Скрываем поле "Город" для России
         $('.field-customerform-townru').hide();
         //Показываем поле "Город" для других стран
-        $('.field-customerform-town').show().addClass('required');
+        $('.field-customerform-town').show();
         //Скрываем поле "Индекс" для России
         $('.field-customerform-indexru').hide();
         //Показываем поле "Индекс" для других стран
-        $('.field-customerform-index').show().addClass('required');
+        $('.field-customerform-index').show();
     } //end if...
 
     //Скрываем и плавно раскрываем панель "Адрес доставки"
@@ -91,17 +94,18 @@ $(document).ready(function(){
         // Запрещаем стандартное поведение для кнопки "Продолжить".
         e.preventDefault();
         validateCountry();  //Валидируем поле "Страна"
-        validateTown();     //Валидируем поле "Город" для других городов
-        validateTownru();   //Валидируем поле "Город" для России
         validateStreet();   //Валидируем поле "Улица дом квартира"
 
         if ('RU' === $("#customerform-country").val()) {
             validateIndexru();  //Валидируем поле "Индекс" для России
+            validateTownru();   //Валидируем поле "Город" для России
             $('.field-customerform-index').removeClass('has-error').addClass('has-success');
             $('.field-customerform-town').removeClass('has-error').addClass('has-success');
         }else{ //иначе
             $('.field-customerform-indexru').removeClass('has-error').addClass('has-success');
+            $('.field-customerform-townru').removeClass('has-error').addClass('has-success');
             validateIndex();    //Валидируем поле "Индекс"
+            validateTown();     //Валидируем поле "Город" для других городов
         }
         validateImya();     //Валидируем поле "Фамилия Имя Отчество"
         validateRecipientphone();   //Валидируем поле "Телефон получателя"
@@ -114,7 +118,6 @@ $(document).ready(function(){
             // у нашей формы вызываем метод .serialize().
             // Это очень удобно, т.к. он возвращает строку с именами и значениями выбранных элементов формы.
             // Выполняем наш Ajax сценарий и отправляем форму в контроллер
-            console.log($('form#customer-form').serialize());
             $.ajax({
                 url: "/shop/checkout/send",
                 type: 'post',
@@ -124,22 +127,18 @@ $(document).ready(function(){
                 success: function(jsondata){
 
                     console.log(jsondata);
-                    if(jsondata.form.error.all){
-                        if(jsondata.form.error.email.bool){
-                            $('input#customerform-email').next('.help-block').text(jsondata.form.error.email.text);
-                            $('.field-customerform-email').removeClass('has-success').addClass('has-error');}
-                        if(jsondata.form.error.phone.bool){
-                            $('.field-customerform-phone .help-block').text(jsondata.form.error.phone.text);
-                            $('.field-customerform-phone').removeClass('has-success').addClass('has-error');}
-                    }else {
-                        $('#conte').html();
-                        $(".accordion-two").next(".panel-two").hide("slow");
-                        $(".accordion-three").next(".panel-three").show("slow");
-                        $(".accordion-two .symb").addClass('yes');
-                        $("div#two").addClass('panel-success');
-                        //Выставляем синенький цвет панели
-                        $("div#two").removeClass('panel-danger');
-                    }
+                    $('#conte').html();
+                    $(".accordion-two").next(".panel-two").hide("slow");
+                    $(".accordion-three").next(".panel-three").show("slow");
+                    $(".accordion-two .symb").addClass('yes');
+                    $("div#two").addClass('panel-success');
+                    //Выставляем синенький цвет панели
+                    $("div#two").removeClass('panel-danger');
+                    let a = Number.parseInt(jsondata.russianpost.ЦеннаяПосылка.Доставка) + Number.parseInt(jsondata.russianpost.ЦеннаяПосылка.НаложенныйПлатеж);
+                    $('#nazemnaya_posilka_price').text(jsondata.russianpost.ЦеннаяПосылка.Доставка);
+                    $('#nazemnaya_posilka_time').text(jsondata.russianpost.ЦеннаяПосылка.СрокДоставки);
+                    $('#naloj_platej_price').text(a);
+                    $('#naloj_platej_time').text(jsondata.russianpost.ЦеннаяПосылка.СрокДоставки);
                 }
             }); // end ajax({...})
         }else{  // Иначе, если количество полей с данным классом не равно значению 10, то...
@@ -172,19 +171,19 @@ $(document).ready(function(){
         $(".accordion-two .symb").removeClass('yes');
         //Удаляем зелененький цвет панели
         $("div#two").removeClass('panel-success');
-        //Выставляем синенький цвет панели
+        //Выставляем розовенький цвет панели
         $("div#two").addClass('panel-danger');
         //Если страна Россия, то
         if ('RU' === $("#customerform-country").val()) {
             let a = $('.field-customerform-town');
             //Скрываем поле "Город" для других стран
-            a.hide().removeClass('has-error').addClass('has-success');
+            a.hide().removeClass('has-error');
             //Показываем поле "Город" для России
-            $('.field-customerform-townru').show();
+            $('.field-customerform-townru').removeClass('has-error has-success').show();
             //Удаляем сообщение под полем "Город" для других стран
             $('input#customerform-town').next('.help-block').text('');
             //Скрываем поле "Индекс" для других стран
-            $('.field-customerform-index').hide().addClass('required has-success');
+            $('.field-customerform-index').hide();
             //Показываем поле "Индекс" для России
             $('.field-customerform-indexru').removeClass('has-error has-success').show();
             //Удаляем сообщение под полем "Индекс" для других стран
@@ -197,7 +196,7 @@ $(document).ready(function(){
             //Показываем поле "Город" для других стран
             $('.field-customerform-town').removeClass('has-error has-success').show();
             //Скрываем поле "Индекс" для России
-            $('.field-customerform-indexru').hide().addClass('required has-success');
+            $('.field-customerform-indexru').hide();
             //Удаляем сообщение под полем "Индекс" для других стран
             $('input#customerform-index').next('.help-block').text('');
             //Показываем ввод индекса для других стран
@@ -215,6 +214,17 @@ $(document).ready(function(){
         //Выставляем синенький цвет панели
         $("div#two").addClass('panel-danger');
     }); //конец обработчика события "change" поля "Город или Населенный пункт, Район"
+
+    //Событие "change" поля "Индекс" для России
+    $('select#customerform-townru').change('select2:close', function(){
+        //Валидируем поле "Индекс" для России
+        validateTownru();
+        //Удаляем галочку "yes"
+        $(".accordion-two .symb").removeClass('yes');
+        $("div#two").removeClass('panel-success');
+        //Выставляем синенький цвет панели
+        $("div#two").addClass('panel-danger');
+    }); //конец обработчика события "change" поля "Индекс" для России
 
     //Событие "change" поля "Улица дом квартира"
     $('input#customerform-street').change( function(){

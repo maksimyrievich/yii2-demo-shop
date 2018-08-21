@@ -195,10 +195,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <span id="edost_title"> Почта России (наземная посылка)</span>
                             </td>
                             <td>
-                                <span id="edost_price">509.00 руб.</span>
+                                <span id="nazemnaya_posilka_price"></span><span> руб.</span>
                             </td>
                             <td>
-                                <span id="edost_delivery">11-21 день</span>
+                                <span id="nazemnaya_posilka_time"></span></span><span> дней.</span>
                             </td>
                         </tr>
                         <tr>
@@ -212,10 +212,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <span id="edost_title"> Почта России (наложенным платежом)</span>
                             </td>
                             <td>
-                                <span id="edost_price">511.00 руб.</span>
+                                <span id="naloj_platej_price"></span><span> руб.</span>
                             </td>
                             <td>
-                                <span id="edost_delivery">11-21 день</span>
+                                <span id="naloj_platej_time"></span><span> дней.</span>
                             </td>
                         </tr>
                         <tr title="Для отправки этим способом понадобятся ваши паспортные данные">

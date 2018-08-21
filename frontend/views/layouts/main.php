@@ -192,7 +192,7 @@ AppAsset::register($this);
             </div>
         </div>
         <hr>
-        <p>Powered By <a href="http://www.opencart.com">OpenCart</a><br/> Your Store &copy; 2017</p>
+        <p>Powered By Yii2<br/> Your Store &copy; 2017</p>
     </div>
 </footer>
 

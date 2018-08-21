@@ -3,6 +3,7 @@ return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'bootstrap' => [
         'queue',
+        'config',
     ],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -23,6 +24,9 @@ return [
         'queue' => [
             'class' => 'yii\queue\redis\Queue',
             'as log' => 'yii\queue\LogBehavior',
+        ],
+        'config' => [
+            'class' => 'common\components\ConfigComponent',
         ],
     ],
 ];

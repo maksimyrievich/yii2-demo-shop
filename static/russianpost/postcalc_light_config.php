@@ -1,4 +1,6 @@
 <?php
+
+
 /**
  * Конфигурационный файл для клиента postcalc_light.php и библиотеки postcalc_light_lib.php
  * 

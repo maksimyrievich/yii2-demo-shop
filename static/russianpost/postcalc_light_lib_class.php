@@ -2,7 +2,6 @@
 
 namespace shop\services\delivery\russian_post;
 
-
 /**
  * Основная функция опроса сервера Postcalc.RU
  * 
@@ -100,8 +99,6 @@ class RussianPostCalc
     private $config_servers = array('test.postcalc.ru'); //'api.postcalc.ru', - на боевом сервере
     //Список серверов для коммерческой версии
     //'servers'=>array('pro.postcalc.ru', 'pro2.postcalc.ru', 'api.postcalc.ru', 'test.postcalc.ru'),
-
-
 
 
     public function postcalc_request($From, $To, $Weight, $Valuation = 0, $Country = 'RU')

@@ -3,13 +3,12 @@
 namespace frontend\controllers\shop;
 
 use shop\cart\Cart;
-use shop\services\delivery\russianpost\RussianPost;
+use shop\services\delivery\RussianPost;
 use shop\forms\Shop\Order\CustomerForm;
 use shop\repositories\UserRepository;
 use shop\useCases\Shop\OrderService;
 use Yii;
 use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\db\Query;
 use shop\entities\Shop\options\Cities;
@@ -174,28 +173,23 @@ class CheckoutController extends Controller
             $session['user.phone'] = $form->phone;
         }
 
-
         // Обращаемся к функции getPostcalc
+        $to = $form->country != 'RU' ? '413860' : $form->townru;
         $temp = new RussianPost();
-        $arrResponse = $temp->postcalc_request('413860',"413801", 1000, 0, 'RU');
+        $cart = $this->cart->getCost();
 
+        $arrResponse = $temp->postcalc_request( Yii::$app->config->get('RUS_POST_ADDR_FROM'), $to, $this->cart->getWeight(), $cart->getTotal(), $form->country);
+        $arrResponce[] =
 
 
 
 
 
         Yii::$app->response->format = Response::FORMAT_JSON;
-        return ['form' =>   ['error' => ['all' => $form->hasErrors() ? 1 : 0 ,
-                                         'email' => ['bool' => $form->hasErrors('email') ? 1 : 0,
-                                                     'text' => $form->getFirstError('email'),
-                                                     'ru_post' => $arrResponse
-                                                    ],
-                                         'phone' => [$form->hasErrors('phone') ? 1 : 0,
-                                                     'bool' => $form->hasErrors('phone') ? 1 : 0,
-                                                     'text' => $form->getFirstError('phone')
-                                                    ],
-                                         ],
-                            ],
+        return ['russianpost' => $arrResponse,
+
+
                ];
+
     }
 }

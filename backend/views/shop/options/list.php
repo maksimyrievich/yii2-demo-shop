@@ -22,11 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <a class="btn btn-app" href="<?=Yii::$app->urlManager->createUrl(['shop/options/country/index'])?>">
                     <i class="fa fa-file-text-o"></i> Список стран
                 </a>
-                <a class="btn btn-app">
-                    <i class="fa fa-bar-chart-o"></i> Статус заказа
-                </a>
                 <a class="btn btn-app" href="<?=Yii::$app->urlManager->createUrl(['shop/options/database/index'])?>">
                     <i class="fa  fa-database" ></i> Базы данных
+                </a>
+                <a class="btn btn-app" href="<?=Yii::$app->urlManager->createUrl(['shop/options/config/index'])?>">
+                    <i class="fa fa-bar-chart-o"></i> Настройки
                 </a>
                 <a class="btn btn-app">
                     <i class="fa fa-pause"></i> Pause
