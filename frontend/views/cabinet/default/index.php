@@ -4,7 +4,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Cabinet';
+$this->title = 'Мой кабинет';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cabinet-index">

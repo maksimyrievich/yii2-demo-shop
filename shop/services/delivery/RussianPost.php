@@ -103,7 +103,6 @@ class RussianPost {
      */
     public function postcalc_request($From, $To, $Weight, $Valuation = 0, $Country = 'RU')
     {
-        logfile('Вошли в postcalc_request');
         // Обязательно! Проверяем данные - больше всего ошибочных запросов из-за неверных значений веса и оценки,
         // из-за пропущенного поля "Куда".
         if (!is_numeric($Weight) || !($Weight > 0 && $Weight <= 100000))
@@ -345,11 +344,8 @@ class RussianPost {
     public function postcalc_arr_from_txt($src_txt, $search = '', $limit = 0)
     {
         $arr = array();
-        logfile('postcalc_arr_from_txt');
         // === Источник - таблица mysql
-        logfile($this->config_source);
         if ($this->config_source === 'mysql') {
-            logfile('Источник - таблица mysql');
             $TableName = basename($src_txt, '.txt');
             // Небольшой хак, чтобы установить имя ключевого поля.
             if ($TableName == 'postcalc_light_cities') {
@@ -375,10 +371,8 @@ class RussianPost {
                 if ($i == 1) {$c = $value;}
                 $i++;}
             $arr[$b] = $c;
-            logfileArraySerrial($arr);
             return $arr;
         }
-        logfile('Источник - текстовый файл.');
         // === Источник - текстовый файл.
         $src_idx = basename($src_txt, 'txt') . 'idx';
         $src_txt = $this->config_txt_dir . '/' . $src_txt;

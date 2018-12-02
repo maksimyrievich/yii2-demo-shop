@@ -39,7 +39,10 @@ class ProductSearch extends Model
             'query' => $query,
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
-            ]
+            ],
+            'pagination' => [
+                'pageSize' => 11,
+            ],
         ]);
 
         $this->load($params);

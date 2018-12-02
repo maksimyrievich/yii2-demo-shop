@@ -34,10 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'created_at:datetime',
                     [
-                        'attribute' => 'status',
+                        'attribute' => 'current_status',
                         'filter' => $searchModel->statusList(),
                         'value' => function (Order $model) {
-                            return OrderHelper::statusLabel($model->current_status);
+                                        foreach ($model->statuses as $status){
+                                            $data = $status->value;}
+                                        return OrderHelper::statusLabel($data);
                         },
                         'format' => 'raw',
                     ],

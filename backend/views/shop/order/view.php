@@ -34,7 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'created_at:datetime',
                     [
                         'attribute' => 'current_status',
-                        'value' => OrderHelper::statusLabel($order->current_status),
+                        'value' => function ($order) {
+                            foreach ($order->statuses as $status){
+                                $data = $status->value;}
+                            return OrderHelper::statusLabel($data);
+                        },
                         'format' => 'raw',
                     ],
                     'user_id',
@@ -54,11 +58,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table table-bordered" style="margin-bottom: 0">
                     <thead>
                     <tr>
-                        <th class="text-left">Product Name</th>
-                        <th class="text-left">Model</th>
-                        <th class="text-left">Quantity</th>
-                        <th class="text-right">Unit Price</th>
-                        <th class="text-right">Total</th>
+                        <th class="text-left">Название товара</th>
+                        <th class="text-left">Модель</th>
+                        <th class="text-left">Количество</th>
+                        <th class="text-right">Цена/ед</th>
+                        <th class="text-right">Всего</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -91,8 +95,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table table-bordered" style="margin-bottom: 0">
                     <thead>
                     <tr>
-                        <th class="text-left">Date</th>
-                        <th class="text-left">Staus</th>
+                        <th class="text-left">История заказа</th>
+                        <th class="text-left">Статус</th>
                     </tr>
                     </thead>
                     <tbody>

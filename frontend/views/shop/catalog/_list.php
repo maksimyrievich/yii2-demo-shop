@@ -47,7 +47,7 @@ use yii\widgets\LinkPager;
             <label class="input-group-addon" for="input-limit">Показывать по:</label>
             <select id="input-limit" class="form-control" onchange="location = this.value;">
                 <?php
-                $values = [3, 15, 25, 50, 75, 100];
+                $values = [ 20, 25, 50, 75, 100];
                 $current = $dataProvider->getPagination()->getPageSize();
                 ?>
                 <?php foreach ($values as $value): ?>

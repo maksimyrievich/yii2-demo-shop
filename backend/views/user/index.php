@@ -47,7 +47,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'username',
                         'value' => function (User $model) {
-                            return Html::a(Html::encode($model->username), ['view', 'id' => $model->id]);
+                            return Yii::$app->user->can('adminPanel') ?
+                            Html::a(Html::encode($model->username), ['view', 'id' => $model->id]) :
+                            Html::encode($model->username);
                         },
                         'format' => 'raw',
                     ],
@@ -65,7 +67,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'format' => 'raw',
                     ],
-                    ['class' => ActionColumn::class],
+                    Yii::$app->user->can('adminPanel') ?
+                    ['class' => ActionColumn::class] : ['class' => ActionColumn::class,'template'=>'']
+
                 ],
             ]); ?>
         </div>

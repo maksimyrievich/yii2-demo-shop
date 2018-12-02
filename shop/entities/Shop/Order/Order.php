@@ -15,6 +15,7 @@ use yii\helpers\Json;
  * @property int $user_id
  * @property int $delivery_method_id
  * @property string $delivery_method_name
+ * @property string $order_weight
  * @property int $delivery_cost
  * @property string $payment_method
  * @property int $cost
@@ -33,7 +34,7 @@ class Order extends ActiveRecord
     public $deliveryData;
     public $statuses = [];
 
-    public static function create($userId, CustomerData $customerData, array $items, $cost, $note): self
+    public static function create($userId, CustomerData $customerData, array $items, $cost, $note, $status, $weight): self
     {
         $order = new static();
         $order->user_id = $userId;
@@ -42,7 +43,8 @@ class Order extends ActiveRecord
         $order->cost = $cost;
         $order->note = $note;
         $order->created_at = time();
-        $order->addStatus(Status::NEW);
+        $order->addStatus($status);
+        $order->order_weight = $weight;
         return $order;
     }
 
@@ -58,6 +60,11 @@ class Order extends ActiveRecord
         $this->delivery_method_name = $method->name;
         $this->delivery_cost = $method->cost;
         $this->deliveryData = $deliveryData;
+    }
+
+    public function setPaymentInfo($payment_method): void
+    {
+        $this->payment_method = $payment_method;
     }
 
     public function pay($method): void
@@ -106,7 +113,7 @@ class Order extends ActiveRecord
 
     public function isNew(): bool
     {
-        return $this->current_status == Status::NEW;
+        return $this->current_status == Status::WAITINGPAIMENT;
     }
 
     public function isPaid(): bool
@@ -192,7 +199,11 @@ class Order extends ActiveRecord
 
         $this->deliveryData = new DeliveryData(
             $this->getAttribute('delivery_index'),
-            $this->getAttribute('delivery_address')
+            //$this->getAttribute('delivery_address'),
+            $this->getAttribute('delivery_country'),
+            $this->getAttribute('delivery_town'),
+            $this->getAttribute('delivery_street')
+
         );
 
         parent::afterFind();
@@ -209,10 +220,34 @@ class Order extends ActiveRecord
 
         $this->setAttribute('customer_phone', $this->customerData->phone);
         $this->setAttribute('customer_name', $this->customerData->name);
+        $this->setAttribute('order_weight', $this->order_weight);
 
         $this->setAttribute('delivery_index', $this->deliveryData->index);
-        $this->setAttribute('delivery_address', $this->deliveryData->address);
+        $this->setAttribute('delivery_country', $this->deliveryData->country);
+        $this->setAttribute('delivery_town', $this->deliveryData->town);
+        $this->setAttribute('delivery_street', $this->deliveryData->street);
 
         return parent::beforeSave($insert);
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'Номер',
+            'created_at' => 'Дата создания',
+            'cost' => 'Сумма заказа',
+            'current_status' => 'Текущий статус',
+            'customer_name' => 'Имя получателя',
+            'customer_phone' => 'Мобильный телефон',
+            'delivery_method_name' => 'Способ доставки',
+            'delivery_country' => 'Страна',
+            'delivery_town' => 'Город',
+            'delivery_street' => 'Улица',
+            'delivery_index' => 'Индекс',
+            'note' => 'Примечание',
+            'order_weight' => 'Вес заказа',
+            'payment_method' => 'Способ оплаты',
+
+        ];
     }
 }

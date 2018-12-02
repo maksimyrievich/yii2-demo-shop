@@ -52,7 +52,7 @@ class SignupController extends Controller
             try {
                 //Выполняем сервисную функцию регистрации, передавая ей созданную форму в качестве аргумента
                 $this->service->signup($form);
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', 'Пройдите на Вашу почту для завершения регистрации.');
                 return $this->goHome();
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
@@ -78,7 +78,7 @@ class SignupController extends Controller
         try {
             //Выполняем сервисную функцию
             $this->service->confirm($token);
-            Yii::$app->session->setFlash('success', 'Your email is confirmed.');
+            Yii::$app->session->setFlash('success', 'Вы успешно зарегистрировались на нашем сайте. Мы выслали на ваш email - логин и пароль. Используйте их для входа на нашем сайте.');
             return $this->redirect(['auth/auth/login']);
         } catch (\DomainException $e) {
             Yii::$app->errorHandler->logException($e);

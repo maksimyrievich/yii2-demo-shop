@@ -17,21 +17,21 @@ use yii\helpers\Url;
         <div id="slideshow0" class="owl-carousel" style="opacity: 1;">
             <div class="item">
                 <a href="index.php?route=product/product&amp;path=57&amp;product_id=49"><img
-                            src="<?=Url::to('@static/cache/banners/iPhone6-1140x380.jpg')?>"
+                            src="<?=Url::to('@static/cache/banners/shlang2.jpg')?>"
                             alt="iPhone 6" class="img-responsive"/></a>
             </div>
             <div class="item">
-                <img src="<?=Url::to('@static/cache/banners/MacBookAir-1140x380.jpg')?>"
+                <img src="<?=Url::to('@static/cache/banners/shlang_red.jpg')?>"
                      alt="MacBookAir" class="img-responsive"/>
             </div>
         </div>
-        <h3>Featured</h3>
+        <h3>Хиты продаж</h3>
 
         <?= FeaturedProductsWidget::widget([
             'limit' => 4,
         ]) ?>
 
-        <h3>Last Posts</h3>
+        <h3>Каталог запчастей</h3>
 
         <?= LastPostsWidget::widget([
             'limit' => 4,
@@ -39,35 +39,35 @@ use yii\helpers\Url;
 
         <div id="carousel0" class="owl-carousel">
             <div class="item text-center">
-                <img src="<?=Url::to('@static/cache/manufacturers/nfl-130x100.png')?>" alt="NFL"
+                <img src="<?=Url::to('@static/cache/manufacturers/vaz_2114.jpg')?>" alt="NFL"
                      class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?=Url::to('@static/cache/manufacturers/redbull-130x100.png')?>"
+                <img src="<?=Url::to('@static/cache/manufacturers/vaz_2115.jpg')?>"
                      alt="RedBull" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?=Url::to('@static/cache/manufacturers/sony-130x100.png')?>" alt="Sony"
+                <img src="<?=Url::to('@static/cache/manufacturers/vaz_2107.jpg')?>" alt="Sony"
                      class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?=Url::to('@static/cache/manufacturers/cocacola-130x100.png')?>"
+                <img src="<?=Url::to('@static/cache/manufacturers/vaz_2110.jpg')?>"
                      alt="Coca Cola" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?=Url::to('@static/cache/manufacturers/burgerking-130x100.png')?>"
+                <img src="<?=Url::to('@static/cache/manufacturers/vaz_21214.jpg')?>"
                      alt="Burger King" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?=Url::to('@static/cache/manufacturers/canon-130x100.png')?>" alt="Canon"
+                <img src="<?=Url::to('@static/cache/manufacturers/vaz_chevrolet_niva.jpg')?>" alt="Canon"
                      class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?=Url::to('@static/cache/manufacturers/harley-130x100.png')?>"
+                <img src="<?=Url::to('@static/cache/manufacturers/vaz_largus.jpg')?>"
                      alt="Harley Davidson" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?=Url::to('@static/cache/manufacturers/dell-130x100.png')?>" alt="Dell"
+                <img src="<?=Url::to('@static/cache/manufacturers/vaz_granta.jpg')?>" alt="Dell"
                      class="img-responsive"/>
             </div>
             <div class="item text-center">

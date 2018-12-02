@@ -20,13 +20,13 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="box-body">
                 <a class="btn btn-app" href="<?=Yii::$app->urlManager->createUrl(['shop/options/country/index'])?>">
-                    <i class="fa fa-file-text-o"></i> Список стран
+                    <i class="fa fa-file-text-o"></i> Список стран доставки
                 </a>
                 <a class="btn btn-app" href="<?=Yii::$app->urlManager->createUrl(['shop/options/database/index'])?>">
-                    <i class="fa  fa-database" ></i> Базы данных
+                    <i class="fa  fa-database" ></i> Управление Базами данных
                 </a>
                 <a class="btn btn-app" href="<?=Yii::$app->urlManager->createUrl(['shop/options/config/index'])?>">
-                    <i class="fa fa-bar-chart-o"></i> Настройки
+                    <i class="fa fa-bar-chart-o"></i> Список настроек
                 </a>
                 <a class="btn btn-app">
                     <i class="fa fa-pause"></i> Pause

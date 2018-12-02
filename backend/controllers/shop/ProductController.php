@@ -145,12 +145,12 @@ class ProductController extends Controller
 
         $form = new ProductEditForm($product);
         //$form->meta = new MetaForm($product->meta);
-        //$form->categories = new CategoriesForm($product);
+        $form->categories = new CategoriesForm($product);
         //$form->tags = new TagsForm($product);
 
-        if ($form->load(Yii::$app->request->post()) && $form->validate() //&&
+        if ($form->load(Yii::$app->request->post()) && $form->validate() &&
             //$form->meta->load(Yii::$app->request->post()) && $form->validate() &&
-            //$form->categories->load(Yii::$app->request->post()) && $form->validate() &&
+            $form->categories->load(Yii::$app->request->post()) && $form->validate() //&&
             //$form->tags->load(Yii::$app->request->post()) && $form->validate()
         ) {
             try {

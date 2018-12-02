@@ -41,13 +41,15 @@ class CheckoutController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
+                        'actions' => [],
                         'roles' => ['@'],
                     ],
                     [
-                        'allow' => true,
-                        'actions' => [],
-                        'roles' => ['?'],
+                        'allow' => false,       //Запретить доступ
+                        'actions' => ['index'], //к действию 'index'
+                        'roles' => ['?'],       //гостям. '?' - означает гостя.
                     ],
+
                 ],
             ],
         ];
@@ -156,6 +158,8 @@ class CheckoutController extends Controller
 
     public function actionSend(){
 
+        logfile('zapros prohel');
+
         $form = new CustomerForm($this->cart->getWeight());
 
         if($form->load(Yii::$app->request->post()) && $form->validate())
@@ -178,11 +182,14 @@ class CheckoutController extends Controller
         $temp = new RussianPost();
         $cart = $this->cart->getCost();
 
-        $arrResponse = $temp->postcalc_request( Yii::$app->config->get('RUS_POST_ADDR_FROM'), $to, $this->cart->getWeight(), $cart->getTotal(), $form->country);
-        $arrResponce[] =
-
-
-
+        $arrResponse = $temp->postcalc_request(
+            Yii::$app->config->get('RUS_POST_ADDR_FROM'),
+            $to,
+            $this->cart->getWeight(),
+            $cart->getTotal(),
+            $form->country);
+        $temp = $arrResponse['Отправления']['ЦеннаяПосылка']['Доставка'] + Yii::$app->config->get('RUS_POST_EXTRA_CHARGE_1');
+        $arrResponse['Отправления']['ЦеннаяПосылка']['Доставка'] = $temp;
 
 
         Yii::$app->response->format = Response::FORMAT_JSON;

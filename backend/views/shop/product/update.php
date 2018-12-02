@@ -8,8 +8,8 @@ use yii\bootstrap\ActiveForm;
 /* @var $product shop\entities\Shop\Product\Product */
 /* @var $model shop\forms\manage\Shop\Product\ProductEditForm */
 
-$this->title = 'Update Product: ' . $product->name;
-$this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
+$this->title = 'Изменить товар: ' . $product->name;
+$this->params['breadcrumbs'][] = ['label' => 'Товары', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $product->name, 'url' => ['view', 'id' => $product->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

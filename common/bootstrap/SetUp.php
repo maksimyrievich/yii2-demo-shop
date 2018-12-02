@@ -22,7 +22,8 @@ use shop\listeners\Shop\Product\ProductAppearedInStockListener;
 use shop\listeners\Shop\Product\ProductSearchPersistListener;
 use shop\listeners\Shop\Product\ProductSearchRemoveListener;
 use shop\listeners\User\UserSignupConfirmedListener;
-use shop\listeners\User\UserSignupRequestedListener;
+use shop\listeners\User\UserSignupConfirmedEmailListener;
+use shop\listeners\User\UserSignupRequestedEmailListener;
 use shop\repositories\events\EntityPersisted;
 use shop\repositories\events\EntityRemoved;
 use shop\services\newsletter\MailChimp;
@@ -106,29 +107,32 @@ class SetUp implements BootstrapInterface
 
         $container->setSingleton(EventDispatcher::class, DeferredEventDispatcher::class);
 
-        $container->setSingleton(DeferredEventDispatcher::class, function (Container $container) {
-            return new DeferredEventDispatcher(new AsyncEventDispatcher($container->get(Queue::class)));
-        });
+//        $container->setSingleton(DeferredEventDispatcher::class, function (Container $container) {
+//            return new DeferredEventDispatcher(new AsyncEventDispatcher($container->get(Queue::class)));
+//        });
 
-        $container->setSingleton(SimpleEventDispatcher::class, function (Container $container) {
-            return new SimpleEventDispatcher($container, [
-                UserSignUpRequested::class => [UserSignupRequestedListener::class],
-                UserSignUpConfirmed::class => [UserSignupConfirmedListener::class],
+        $container->setSingleton(DeferredEventDispatcher::class, function (Container $container) {
+            return new DeferredEventDispatcher(new SimpleEventDispatcher ($container, [
+                UserSignUpRequested::class => [UserSignupRequestedEmailListener::class],
+                UserSignUpConfirmed::class => [
+                    UserSignupConfirmedListener::class,
+                    UserSignupConfirmedEmailListener::class,
+                ],
                 ProductAppearedInStock::class => [ProductAppearedInStockListener::class],
                 EntityPersisted::class => [
-                    ProductSearchPersistListener::class,
-                    CategoryPersistenceListener::class,
+                    //ProductSearchPersistListener::class,
+                    //CategoryPersistenceListener::class,
                 ],
                 EntityRemoved::class => [
-                    ProductSearchRemoveListener::class,
-                    CategoryPersistenceListener::class,
+                    //ProductSearchRemoveListener::class,
+                    //CategoryPersistenceListener::class,
                 ],
-            ]);
+            ]));
         });
 
-        $container->setSingleton(AsyncEventJobHandler::class, [], [
-            Instance::of(SimpleEventDispatcher::class)
-        ]);
+//        $container->setSingleton(AsyncEventJobHandler::class, [], [
+//            Instance::of(SimpleEventDispatcher::class)
+//        ]);
 
         /*
         $container->setSingleton(Filesystem::class, function () use ($app) {

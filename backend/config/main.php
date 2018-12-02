@@ -54,6 +54,7 @@ return [
                 'httpOnly' => true,
                 'domain' => $params['cookieDomain'],
             ],
+            //Данная опция задает экшен, на который будет автоматически перенаправляться юзер, если он не авторизован на сайте.
             'loginUrl' => ['auth/login'],
         ],
         'session' => [
@@ -83,11 +84,13 @@ return [
     ],
     'as access' => [
         'class' => 'yii\filters\AccessControl',
+        //Доступ ограничен ко всему, кроме экшенов 'auth/login', 'site/error'
         'except' => ['auth/login', 'site/error'],
         'rules' => [
             [
                 'allow' => true,
-                'roles' => ['admin'],
+                //Доступ к админке с правами мэнеджер
+                'roles' => ['manager'],
             ],
         ],
     ],

@@ -33,7 +33,10 @@ class CategorySearch extends Model
             'query' => $query,
             'sort' => [
                 'defaultOrder' => ['lft' => SORT_ASC]
-            ]
+            ],
+            'pagination' => [
+                'pageSize' => 11,
+    ],
         ]);
 
         $this->load($params);

@@ -31,7 +31,7 @@ MagnificPopupAsset::register($this);
 ?>
 
 <div class="row" xmlns:fb="http://www.w3.org/1999/xhtml">
-    <div class="col-sm-8">
+    <div class="col-sm-6">
         <ul class="thumbnails">
             <?php foreach ($product->photos as $i => $photo): ?>
                 <?php if ($i == 0): ?>
@@ -108,7 +108,7 @@ MagnificPopupAsset::register($this);
             </div>
         </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <p class="btn-group">
             <button type="button" data-toggle="tooltip" class="btn btn-default" title="Add to Wish List" href="<?= Url::to(['/cabinet/wishlist/add', 'id' => $product->id]) ?>" data-method="post"><i class="fa fa-heart"></i></button>
             <button type="button" data-toggle="tooltip" class="btn btn-default" title="Compare this Product" onclick="compare.add('47');"><i class="fa fa-exchange"></i></button>

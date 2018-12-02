@@ -9,8 +9,11 @@ $(document).ready(function(){
     $(".accordion-one .symb").addClass('yes');
     //Скрываем панель "Выбор доставки".
     $(".panel-three").hide();
+    //Скрываем панель "Способ оплаты".
+    $(".panel-four").hide();
     $("div#two").addClass('panel-danger');
     $("div#three").addClass('panel-danger');
+    $("div#four").addClass('panel-danger');
     $('.field-customerform-country').addClass('required ');
     $('.field-customerform-town').addClass('required');
     $('.field-customerform-townru').addClass('required');
@@ -54,6 +57,8 @@ $(document).ready(function(){
             $('.panel-three').hide("slow");
             //Закрываем панель "Адрес доставки"
             $('.panel-two').hide("slow");
+            //Закрываем панель "Способ оплаты"
+            $('.panel-four').hide("slow");
             //Открываем панель "Таблица товаров"
             $('.panel-one').show("slow");
         }else{
@@ -65,6 +70,9 @@ $(document).ready(function(){
             }else if(!($('div#three').is('.panel-success'))){
                 //Открываем панель "Способ доставки"
                 $('.panel-three').show("slow");
+            }else if(!($('div#four').is('.panel-success'))) {
+                //Открываем панель "Способ доставки"
+                $('.panel-four').show("slow");
             }
         }
     });
@@ -77,78 +85,87 @@ $(document).ready(function(){
             $('.panel-one').hide("slow");
             //Закрываем панель "Способ доставки"
             $('.panel-three').hide("slow");
+            //Закрываем панель "Способ оплаты"
+            $('.panel-four').hide("slow");
             //Открываем панель "Адрес доставки"
             $('.panel-two').show("slow");
         }else {
             if($('div#two').is('.panel-success')){
                 //Закрываем панель "Адрес доставки"
                 $('.panel-two').hide("slow");
-                //Открываем панель "Способ доставки"
-                $('.panel-three').show("slow");
+                if(!($('div#three').is('.panel-success'))){
+                    //Открываем панель "Способ доставки"
+                    $('.panel-three').show("slow");
+                }else if(!($('div#four').is('.panel-success'))) {
+                    //Открываем панель "Способ доставки"
+                    $('.panel-four').show("slow");
+                }
             }
         }
     });
 
-    //Событие "click" кнопки "Продолжить". Теперь отправим нашу форму с помощью AJAX
-    $('#customerform-submit').click(function(e){
-        // Запрещаем стандартное поведение для кнопки "Продолжить".
-        e.preventDefault();
-        validateCountry();  //Валидируем поле "Страна"
-        validateStreet();   //Валидируем поле "Улица дом квартира"
-
-        if ('RU' === $("#customerform-country").val()) {
-            validateIndexru();  //Валидируем поле "Индекс" для России
-            validateTownru();   //Валидируем поле "Город" для России
-            $('.field-customerform-index').removeClass('has-error').addClass('has-success');
-            $('.field-customerform-town').removeClass('has-error').addClass('has-success');
-        }else{ //иначе
-            $('.field-customerform-indexru').removeClass('has-error').addClass('has-success');
-            $('.field-customerform-townru').removeClass('has-error').addClass('has-success');
-            validateIndex();    //Валидируем поле "Индекс"
-            validateTown();     //Валидируем поле "Город" для других городов
+    //Событие "click" по заголовку панели "Способ доставки"
+    $('.accordion-three').click(function (){
+        //Если панель скрыта, то...
+        if ($('.panel-three').is(":hidden")) {
+            //Закрываем панель "Таблица товаров"
+            $('.panel-one').hide("slow");
+            //Закрываем панель "Адрес получателя"
+            $('.panel-two').hide("slow");
+            //Закрываем панель "Способ оплаты"
+            $('.panel-four').hide("slow");
+            //Открываем панель "Адрес доставки"
+            $('.panel-three').show("slow");
+        }else {
+            if($('div#three').is('.panel-success')){
+                //Закрываем панель "Адрес доставки"
+                $('.panel-three').hide("slow");
+                //Открываем панель "Способ доставки"
+                $('.panel-four').show("slow");
+            }
         }
-        validateImya();     //Валидируем поле "Фамилия Имя Отчество"
-        validateRecipientphone();   //Валидируем поле "Телефон получателя"
-        // После того, как мы нажали кнопку "Отправить", делаем проверку,
-        // если кол-во полей с классом .has-success равно 10 - все поля заполнены верно,
-        console.log($('.has-success').length);
-        if($('.has-success').length === 8)
-        {
-            // Eще одним моментом является то, что в качестве данных для передачи аяксом в контроллер, мы
-            // у нашей формы вызываем метод .serialize().
-            // Это очень удобно, т.к. он возвращает строку с именами и значениями выбранных элементов формы.
-            // Выполняем наш Ajax сценарий и отправляем форму в контроллер
-            $.ajax({
-                url: "/shop/checkout/send",
-                type: 'post',
-                data: $('form#customer-form').serialize(),
+    });
 
-                dataType: 'json',
-                success: function(jsondata){
 
-                    console.log(jsondata);
-                    $('#conte').html();
-                    $(".accordion-two").next(".panel-two").hide("slow");
-                    $(".accordion-three").next(".panel-three").show("slow");
-                    $(".accordion-two .symb").addClass('yes');
-                    $("div#two").addClass('panel-success');
-                    //Выставляем синенький цвет панели
-                    $("div#two").removeClass('panel-danger');
-                    let a = Number.parseInt(jsondata.russianpost.ЦеннаяПосылка.Доставка) + Number.parseInt(jsondata.russianpost.ЦеннаяПосылка.НаложенныйПлатеж);
-                    $('#nazemnaya_posilka_price').text(jsondata.russianpost.ЦеннаяПосылка.Доставка);
-                    $('#nazemnaya_posilka_time').text(jsondata.russianpost.ЦеннаяПосылка.СрокДоставки);
-                    $('#naloj_platej_price').text(a);
-                    $('#naloj_platej_time').text(jsondata.russianpost.ЦеннаяПосылка.СрокДоставки);
-                }
-            }); // end ajax({...})
-        }else{  // Иначе, если количество полей с данным классом не равно значению 10, то...
-            //Возвращаем false, останавливаем отправку сообщения невалидной формы
-            return false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //Событие "click" кнопки "Продолжить" блока "Адрес доставки". Теперь отправим нашу форму с помощью AJAX
+    $('#customerform-submit.btn-one').on('click', function(e){
+        qwery(e);
+    });
+
+    //Событие "click" кнопки "Продолжить" блока "Cпособ доставки".
+    $('#customerform-submit.btn-two').on('click', function(e){
+        //Если количество выбранных элементов меньше одного
+        if($("input:radio:checked").length < 1) {
+            $('input.radio').addClass('radio-error');
+        }else {
+        //Закрываем панель "Адрес доставки"
+            $('.panel-three').hide("slow");
+            $(".accordion-three .symb").addClass('yes');
+            $("div#three").addClass('panel-success');
+            //Выставляем зелёненький цвет панели
+            $("div#three").removeClass('panel-danger');
+            //Открываем панель "Способ оплаты"
+            $('.panel-four').show("slow");
         }
-    }); // конец обработчика события "click" кнопки "Продолжить"
+    });
+
+
 
 //************************************************************************************************************
-//************************************** Блок обработчиков событий "change" **********************************
+//************************************** Блок обработчиков событий "change" - изменение поля *****************
 //************************************************************************************************************
 
     //Событие "change" поля "Фамилия Имя Отчество"
@@ -441,3 +458,57 @@ function validateRecipientphone(string = false) {
         if(string){ return 'okay'; }else { return true; }
     }
 }
+
+function qwery(e){
+    // Запрещаем стандартное поведение для кнопки "Продолжить".
+    e.preventDefault();
+    validateCountry();  //Валидируем поле "Страна"
+    validateStreet();   //Валидируем поле "Улица дом квартира"
+
+    if ('RU' === $("#customerform-country").val()) {
+        validateIndexru();  //Валидируем поле "Индекс" для России
+        validateTownru();   //Валидируем поле "Город" для России
+        $('.field-customerform-index').removeClass('has-error').addClass('has-success');
+        $('.field-customerform-town').removeClass('has-error').addClass('has-success');
+    }else{ //иначе
+        $('.field-customerform-indexru').removeClass('has-error').addClass('has-success');
+        $('.field-customerform-townru').removeClass('has-error').addClass('has-success');
+        validateIndex();    //Валидируем поле "Индекс"
+        validateTown();     //Валидируем поле "Город" для других городов
+    }
+    validateImya();     //Валидируем поле "Фамилия Имя Отчество"
+    validateRecipientphone();   //Валидируем поле "Телефон получателя"
+    // После того, как мы нажали кнопку "Отправить", делаем проверку,
+    // если кол-во полей с классом .has-success равно 10 - все поля заполнены верно,
+    console.log($('.has-success').length);
+    if($('.has-success').length === 8)
+    {
+        // Eще одним моментом является то, что в качестве данных для передачи аяксом в контроллер, мы
+        // у нашей формы вызываем метод .serialize().
+        // Это очень удобно, т.к. он возвращает строку с именами и значениями выбранных элементов формы.
+        // Выполняем наш Ajax сценарий и отправляем форму в контроллер
+        $.ajax({
+            url: "/shop/checkout/send",
+            type: 'post',
+            data: $('form#customer-form').serialize(),
+            dataType: 'json',
+            success: function(jsondata){
+
+                $(".accordion-two").next(".panel-two").hide("slow");
+                $(".accordion-three").next(".panel-three").show("slow");
+                $(".accordion-two .symb").addClass('yes');
+                $("div#two").addClass('panel-success');
+                //Выставляем синенький цвет панели
+                $("div#two").removeClass('panel-danger');
+                let a = jsondata.russianpost.Отправления.ЦеннаяПосылка.Доставка + Number.parseInt(jsondata.russianpost.Отправления.ЦеннаяПосылка.НаложенныйПлатеж);
+                $('#nazemnaya_posilka_price').text(jsondata.russianpost.Отправления.ЦеннаяПосылка.Доставка);
+                $('#nazemnaya_posilka_time').text(jsondata.russianpost.Отправления.ЦеннаяПосылка.СрокДоставки);
+                $('#naloj_platej_price').text(a);
+                $('#naloj_platej_time').text(jsondata.russianpost.Отправления.ЦеннаяПосылка.СрокДоставки);
+            }
+        }); // end ajax({...})
+    }else{  // Иначе, если количество полей с данным классом не равно значению 10, то...
+        //Возвращаем false, останавливаем отправку сообщения невалидной формы
+        return false;
+    }
+}; // конец обработчика события "click" кнопки "Продолжить"

@@ -20,22 +20,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="box">
         <div class="box-body">
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'columns' => [
-                    'id',
-                    [
-                        'attribute' => 'name',
-                        'value' => function (Brand $model) {
-                            return Html::a(Html::encode($model->name), ['view', 'id' => $model->id]);
-                        },
-                        'format' => 'raw',
+            <div class="table-responsive">
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [
+                        'id',
+                        [
+                            'attribute' => 'name',
+                            'value' => function (Brand $model) {
+                                return Html::a(Html::encode($model->name), ['view', 'id' => $model->id]);
+                            },
+                            'format' => 'raw',
+                        ],
+                        'slug',
+                        ['class' => ActionColumn::class],
                     ],
-                    'slug',
-                    ['class' => ActionColumn::class],
-                ],
-            ]); ?>
+                ]); ?>
+            </div>
+
         </div>
     </div>
 </div>

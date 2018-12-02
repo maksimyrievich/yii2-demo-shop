@@ -13,7 +13,7 @@ use shop\helpers\PriceHelper;
 class CustomerForm extends Model
 {
     public $note;
-//    public $method;
+
 //    public $address;
 
     public $weight;
@@ -27,6 +27,12 @@ class CustomerForm extends Model
     public $index;  //почтовый индекс
     public $phone; //Телефон получателя
 
+    // Виды доставки
+    public $delivery_method;
+
+    // Виды оплаты
+    public $payment_method;
+
     public function __construct(int $weight, array $config = [])
     {
         $this->weight = $weight;
@@ -37,6 +43,8 @@ class CustomerForm extends Model
     {
         return [
             [['imya', 'country', 'town',  'street', 'indexru', 'index', 'phone', 'townru'], 'string'],
+            [['delivery_method'],'string'],
+            [['payment_method'],'string'],
         ];
     }
 
@@ -51,7 +59,9 @@ class CustomerForm extends Model
             'street' => 'Улица, дом, квартира',
             'imya' => 'Фамилия Имя Отчество',
             'phone' => 'Телефон',
-
+            'russianpost1' => '',
+            'delivery_method'=> '',
+            'payment_method'=> '',
         ];
     }
     //Выводит список стран в которые разрешена доставка из админки

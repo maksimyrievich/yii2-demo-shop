@@ -38,8 +38,10 @@
                             ['label' => 'Производители', 'icon' => 'file-o', 'url' => ['/shop/brand/index'], 'active' => $this->context->id == 'shop/brand'],
                             ['label' => 'Тэги', 'icon' => 'file-o', 'url' => ['/shop/tag/index'], 'active' => $this->context->id == 'shop/tag'],
                             ['label' => 'Характеристики', 'icon' => 'file-o', 'url' => ['/shop/characteristic/index'], 'active' => $this->context->id == 'shop/characteristic'],
-                            ['label' => 'Способы доставки', 'icon' => 'file-o', 'url' => ['/shop/delivery/index'], 'active' => $this->context->id == 'shop/delivery'],
-                            ['label' => 'Опции', 'icon' => 'file-o', 'url' => ['/shop/options/list'], 'active' => $this->context->id == 'shop/options'],
+                            Yii::$app->user->can('adminPanel') ?
+                            ['label' => 'Способы доставки', 'icon' => 'file-o', 'url' => ['/shop/delivery/list'], 'active' => $this->context->id == 'shop/delivery'] : [],
+                            Yii::$app->user->can('adminPanel') ?
+                            ['label' => 'Параметры', 'icon' => 'file-o', 'url' => ['/shop/options/list'], 'active' => $this->context->id == 'shop/options'] : [],
 
 
                         ]],

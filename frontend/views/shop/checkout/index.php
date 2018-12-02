@@ -38,9 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="cabinet-index">
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="panel panel-success" id="one">
-        <div class="panel-heading accordion-one">Таблица товаров
-            <div class="symb"></div>
-        </div>
+        <div class="panel-heading accordion-one">Таблица товаров<div class="symb"></div>
+    </div>
         <div class="panel-body panel-one">
             <div class="table-responsive">
                 <table class="table table-bordered">
@@ -106,68 +105,65 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
 
-
-
-    <?php $form = ActiveForm::begin(['id' => 'customer-form','enableClientValidation' => false,]) ?>
+    <?php $form = ActiveForm::begin(['id' => 'customer-form','enableClientValidation' => false]) ?>
         <div class="panel panel-default" id="two">
-            <div class="panel-heading accordion-two">Адрес получателя
-                <div class="symb"></div>
-            </div>
-                <div class="panel-body panel-two">
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <?= $form->field($model, 'country')->dropDownList($model->countryList()) ?>
-                            <?= $form->field($model, 'town')->textInput()?>
-                            <?= $form->field($model, 'townru')->widget(Select2::classname(), [
-                                'initValueText' => [$tmp->pindex => $tmp->city], // set the initial display text
-                                'options' => [],
-                                'theme' => Select2::THEME_BOOTSTRAP,
-                                'pluginOptions' => [
-                                    'allowClear' => false,
-                                    'minimumInputLength' => 3,
-                                    'language' => [
-                                        'errorLoading' => new JsExpression("function () { return 'Нет результата ...'; }"),
-                                        'inputTooShort' => new JsExpression("function () { return 'Введите цифры индекса...'; }"),
-                                        'searching' => new JsExpression("function () { return 'Поиск ...'; }"),
-                                    ],
-                                    'ajax' => [
-                                        'url' => Url::to(['/shop/checkout/citylist']),
-                                        'dataType' => 'json',
-                                        'data' => new JsExpression('function(params) { return {q:params.term}; }')
-                                    ],
+            <div class="panel-heading accordion-two">Адрес получателя<div class="symb"></div>
+        </div>
+            <div class="panel-body panel-two">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <?= $form->field($model, 'country')->dropDownList($model->countryList()) ?>
+                        <?= $form->field($model, 'town')->textInput()?>
+                        <?= $form->field($model, 'townru')->widget(Select2::classname(), [
+                            'initValueText' => [$tmp->pindex => $tmp->city], // set the initial display text
+                            'options' => [],
+                            'theme' => Select2::THEME_BOOTSTRAP,
+                            'pluginOptions' => [
+                                'allowClear' => false,
+                                'minimumInputLength' => 3,
+                                'language' => [
+                                    'errorLoading' => new JsExpression("function () { return 'Нет результата ...'; }"),
+                                    'inputTooShort' => new JsExpression("function () { return 'Введите цифры индекса...'; }"),
+                                    'searching' => new JsExpression("function () { return 'Поиск ...'; }"),
                                 ],
-                            ]);?>
-                            <?= $form->field($model, 'street')->textInput() ?>
-                            <?= $form->field($model, 'index')->textInput() ?>
-                            <?= $form->field($model, 'indexru')->widget(Select2::classname(), [
-                                //'initValueText' => $model->adress->countryInit(), // set the initial display text
-                                'options' => ['placeholder' => ''],
-                                'theme' => Select2::THEME_BOOTSTRAP,
-                                'pluginOptions' => [
-                                    'allowClear' => false,
-                                    'minimumInputLength' => 3,
-                                    'language' => [
-                                        'errorLoading' => new JsExpression("function () { return 'Нет результата ...'; }"),
-                                        'inputTooShort' => new JsExpression("function () { return 'Введите цифры индекса...'; }"),
-                                        'searching' => new JsExpression("function () { return 'Поиск ...'; }"),
-                                    ],
-                                    'ajax' => [
-                                        'url' => Url::to(['/shop/checkout/indexlist']),
-                                        'dataType' => 'json',
-                                        'data' => new JsExpression('function(params) { return {q:params.term}; }')
-                                    ],
+                                'ajax' => [
+                                    'url' => Url::to(['/shop/checkout/citylist']),
+                                    'dataType' => 'json',
+                                    'data' => new JsExpression('function(params) { return {q:params.term}; }')
                                 ],
-                            ]);?>
-                            <?= $form->field($model, 'imya')->textInput() ?>
-                            <?= $form->field($model, 'phone',['addon' => ['prepend' => ['content'=>'+']]]) ?>
-                            <div class="panel-body" style=" text-align:left">
-                                <?= Html::Button('Продолжить',['class'=> 'btn btn-success btn-one','id'=>'customerform-submit'])?>
-                            </div>
+                            ],
+                        ]);?>
+                        <?= $form->field($model, 'street')->textInput() ?>
+                        <?= $form->field($model, 'index')->textInput() ?>
+                        <?= $form->field($model, 'indexru')->widget(Select2::classname(), [
+                            //'initValueText' => $model->adress->countryInit(), // set the initial display text
+                            'options' => ['placeholder' => ''],
+                            'theme' => Select2::THEME_BOOTSTRAP,
+                            'pluginOptions' => [
+                                'allowClear' => false,
+                                'minimumInputLength' => 3,
+                                'language' => [
+                                    'errorLoading' => new JsExpression("function () { return 'Нет результата ...'; }"),
+                                    'inputTooShort' => new JsExpression("function () { return 'Введите цифры индекса...'; }"),
+                                    'searching' => new JsExpression("function () { return 'Поиск ...'; }"),
+                                ],
+                                'ajax' => [
+                                    'url' => Url::to(['/shop/checkout/indexlist']),
+                                    'dataType' => 'json',
+                                    'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                                ],
+                            ],
+                        ]);?>
+                        <?= $form->field($model, 'imya')->textInput() ?>
+                        <?= $form->field($model, 'phone',['addon' => ['prepend' => ['content'=>'+']]]) ?>
+                        <div class="panel-body" style=" text-align:left">
+                            <?= Html::Button('Продолжить',['class'=> 'btn btn-success btn-one','id'=>'customerform-submit'])?>
                         </div>
                     </div>
-
                 </div>
+
             </div>
+        </div>
 
     <div class="panel panel-default" id="three">
         <div class="panel-heading accordion-three">Cпособ доставки <span class="symb"></span></div>
@@ -184,41 +180,132 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <span id="edost_input" >
-                                    <input id="shipping_id" type="radio" name="shipping_id" value="e38">
-                                </span>
-                            </td>
-                            <td>
-                                <span id="edost_logo"><img src="<?= Html::encode(Url::to('@static/delivery_img/russian_post.gif')) ?>"></span>
-                                <span id="edost_title"> Почта России (наземная посылка)</span>
-                            </td>
-                            <td>
-                                <span id="nazemnaya_posilka_price"></span><span> руб.</span>
-                            </td>
-                            <td>
-                                <span id="nazemnaya_posilka_time"></span></span><span> дней.</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span id="edost_input">
-                                    <input id="shipping_id" type="radio" name="shipping_id" value="e2s">
-                                </span>
-                            </td>
-                            <td>
-                                <span id="edost_logo"><img src="<?= Html::encode(Url::to('@static/delivery_img/russian_post.gif')) ?>"></span>
-                                <span id="edost_title"> Почта России (наложенным платежом)</span>
-                            </td>
-                            <td>
-                                <span id="naloj_platej_price"></span><span> руб.</span>
-                            </td>
-                            <td>
-                                <span id="naloj_platej_time"></span><span> дней.</span>
-                            </td>
-                        </tr>
-                        <tr title="Для отправки этим способом понадобятся ваши паспортные данные">
+                        <?= $form->field($model, 'delivery_method', ['template' => '{input}'])->radiolist([
+                                '0' => 'Почта России (наземная посылка)',
+                                '1' => 'Почта России (наземная посылка со страховкой)',
+                                '2' => 'Почта России (наложенным платежом)',
+                            ],
+                        ['item' => function($label, $name, $options){
+                            switch ($label){
+                                case 0:
+                                    $value = 1;
+                                    $url = Url::to('@static/delivery_img/russian_post.gif');
+                                    $id = 'nazemnaya_posilka_price';
+                                    $ids = 'nazemnaya_posilka_time';
+                                    break;
+                                case 1:
+                                    $value = 2;
+                                    $url = Url::to('@static/delivery_img/russian_post.gif');
+                                    $id = 'nazemnaya_posilka_strah_price';
+                                    $ids = 'nazemnaya_posilka_strah_time';
+                                    break;
+                                case 2:
+                                    $value = 3;
+                                    $url = Url::to('@static/delivery_img/russian_post.gif');
+                                    $id = 'naloj_platej_price';
+                                    $ids = 'naloj_platej_time';
+                                    break;
+                            }
+                            return
+                            Html::beginTag('tr').
+                            Html::beginTag('td').
+                            Html::beginTag('input',['type'=> 'radio','name' => 'CustomerForm[delivery_method]', 'value'=> $value]).
+                            Html::endTag('td').
+
+                            Html::beginTag('td').
+                            Html::beginTag('span').
+                            Html::beginTag('img',['src'=>Html::encode($url)]).
+                            Html::endTag('span')." ".
+                            Html::beginTag('span'). $name .
+                            Html::endTag('span').
+                            Html::endTag('td').
+
+                            Html::beginTag('td').
+                            Html::beginTag('span',['id'=> $id]).
+                            Html::endTag('span').
+                            Html::beginTag('span')." руб.".
+                            Html::endTag('span').
+                            Html::endTag('td').
+
+                            Html::beginTag('td').
+                            Html::beginTag('span',['id'=> $ids]).
+                            Html::endTag('span').
+                            Html::beginTag('span')." дней.".
+                            Html::endTag('span').
+                            Html::endTag('td').
+                            Html::endTag('tr')
+                            ;}]) ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-body" style="text-align:left">
+                <?= Html::Button('Продолжить',['class'=> 'btn btn-success btn-two','id'=>'customerform-submit'])?>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" id="four" >
+        <div class="panel-heading accordion-four">Способ оплаты <span class="symb"></span></div>
+        <div class="panel-body panel-four">
+            <div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td class="text-left"></td>
+                        <td class="text-left">Способы оплаты</td>
+                        <td class="text-left">Описание способа</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <?= $form->field($model, 'payment_method', ['template' => '{input}'])->radiolist([
+                            '0' => ' По квитанции через банк',
+                            '1' => ' Через "Cбербанк Онлайн',
+                            '2' => ' Оплатить с сайта',
+                        ],
+                            ['item' => function($label, $name, $options){
+                                switch ($label){
+                                    case 0:
+                                        $value = 1;
+                                        $url = Url::to('@static/payment_img/receipt.png');
+                                        $id = 'nazemnaya_posilka_price';
+                                        $ids = 'На e-mail будет выслан счёт и квитанция для оплаты в банке. Распечатайте ее. Возьмите паспорт и квитанцию в банк.';
+                                        break;
+                                    case 1:
+                                        $value = 2;
+                                        $url = Url::to('@static/payment_img/sberbank-onlayn.png');
+                                        $id = 'nazemnaya_posilka_strah_price';
+                                        $ids = 'На e-mail будет выслан счёт и номер карты для осуществления перевода.';
+                                        break;
+                                    case 2:
+                                        $value = 3;
+                                        $url = Url::to('@static/payment_img/card.gif');
+                                        $id = 'naloj_platej_price';
+                                        $ids = 'Онлайн оплата заказа с платежной карты Visa, Mastercard, МИР.';
+                                        break;
+                                }
+                                return
+                                    Html::beginTag('tr').
+                                    Html::beginTag('td').
+                                    Html::beginTag('input',['type'=> 'radio','name' => 'CustomerForm[payment_method]', 'value'=> $value]).
+                                    Html::endTag('td').
+
+                                    Html::beginTag('td').
+                                    Html::beginTag('span').
+                                    Html::beginTag('img',['src'=>Html::encode($url)]).
+                                    Html::endTag('span')." ".
+                                    Html::beginTag('span'). $name .
+                                    Html::endTag('span').
+                                    Html::endTag('td').
+
+                                    Html::beginTag('td').
+                                    Html::beginTag('span',['id'=> $id]).
+                                    Html::endTag('span').
+                                    Html::beginTag('span').$ids.
+                                    Html::endTag('span').
+                                    Html::endTag('td')
+                                    ;}]) ?>
+
+                    <!--<tr title="Для отправки этим способом понадобятся ваши паспортные данные">
                             <td>
                                 <span id="edost_input" >
                                     <input id="shipping_id" type="radio" name="shipping_id" value="e48">
@@ -268,36 +355,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td>
                                 <span id="edost_delivery">5-12 дней</span>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span id="edost_input">
-                                    <input id="shipping_id" type="radio" name="shipping_id" value="e2s">
-                                </span>
-                            </td>
-                            <td>
-                                <span id="edost_logo"><img src="<?= Html::encode(Url::to('@static/delivery_img/russian_post.gif')) ?>"></span>
-                                <span id="edost_title"> Почта России (наземная посылка со страховкой)</span>
-                            </td>
-                            <td>
-                                <span id="edost_price">511.00 руб.</span>
-                            </td>
-                            <td>
-                                <span id="edost_delivery">11-21 день</span>
-                            </td>
-                        </tr>
+                        </tr> -->
+
                     </tbody>
                 </table>
-            </div>
-            <div class="panel-body" style="text-align:left">
-                <?= Html::Button('Продолжить',['class'=> 'btn btn-success btn-one','id'=>'customerform-submit'])?>
             </div>
         </div>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">Note</div>
-        <div class="panel-body">
+    <div class="panel panel-default" id="five" >
+        <div class="panel-heading accordion-five">Способ оплаты <span class="symb"></span></div>
+        <div class="panel-body panel-five">
             <?= $form->field($model, 'note')->textarea(['rows' => 3]) ?>
         </div>
     </div>

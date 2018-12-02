@@ -6,7 +6,7 @@ return [
     'class' => 'yii\web\UrlManager',
     'hostInfo' => $params['frontendHostInfo'],
     'baseUrl' => '',
-    'enablePrettyUrl' => false,
+    'enablePrettyUrl' => true,
     'showScriptName' => false,
     'cache' => true,
     'rules' => [

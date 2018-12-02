@@ -1,20 +1,33 @@
-
-RewriteBase /
-RewriteCond %{HTTP_HOST} ^(www\.)?backend.d927138x.beget.tech$ [NC]
-RewriteCond %{REQUEST_URI} !^/backend
-RewriteRule ^(.*)$ backend/index.php/$1 [L]
-
-RewriteCond %{HTTP_HOST} ^(www\.)?static\.d927138x\.beget\.tech$ [NC]
-RewriteCond %{REQUEST_URI} !^/static
-RewriteRule ^(.*)$ static/$1 [L]
-
 Options +FollowSymLinks
 IndexIgnore */*
 RewriteEngine on
-# if a directory or a file exists, use it directly
+RewriteBase /
+
+# преадресуем на папку /admin
+RewriteCond %{HTTP_HOST} ^(www\.)?admin\.avtosezam\.ru$ [NC]
+RewriteCond %{REQUEST_URI} !^/admin
+RewriteRule ^(.*)$ admin/index.php/$1 [L]
+
+# переадресуем на папку /static
+RewriteCond %{HTTP_HOST} ^(www\.)?static\.avtosezam\.ru$ [NC]
+RewriteCond %{REQUEST_URI} !^/static
+RewriteRule ^(.*)$ static/$1 [L]
+
+# редирект с http на https
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# редирект c www на без www
+RewriteCond %{HTTP_HOST} ^avtosezam\.ru$ [NC]
+RewriteRule ^(.*)$ https://www.avtosezam.ru/$1 [R=301,L]
+
+# убираем из урла index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-# otherwise forward it to index.php
 RewriteRule . index.php
+
+
+
 
 

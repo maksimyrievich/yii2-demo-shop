@@ -50,7 +50,6 @@ class ProductManageService
     {
         $brand = $this->brands->get($form->brandId);
         $category = $this->categories->get($form->categories->main);
-
         $product = Product::create(
             $brand->id,
             $category->id,

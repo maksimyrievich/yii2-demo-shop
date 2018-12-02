@@ -867,7 +867,22 @@ a.active:before{
 tbody > tr:hover {
 	background-color: #f5f5f5;
 }
+
+/* Стили для радиокнопок способов доставки */
+.radio-error {
+	box-shadow: 0 0 10px 3px red;
+}
+
+.table-margin {
+	padding-right: 10px;
+	text-align: right;
+}
+
+
+
 /* конец стилей для таблицы способов доставки на странице /frontend/views/shop/checkout/index.php */
+
+
 
 
 

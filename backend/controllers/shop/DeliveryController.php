@@ -33,6 +33,11 @@ class DeliveryController extends Controller
         ];
     }
 
+    public function actionList()
+    {
+        return $this->render('list', []);
+    }
+
     /**
      * @return mixed
      */

@@ -74,6 +74,7 @@ class User extends ActiveRecord implements AggregateRoot
         $user->username = $username;
         $user->email = $email;
         $user->phone = $phone;
+        $user->password = $password;
         $user->setPassword($password);
         $user->created_at = time();
         $user->status = self::STATUS_WAIT;
@@ -86,7 +87,7 @@ class User extends ActiveRecord implements AggregateRoot
     //Данная функция выполняет необходимые действия после подтверждения пользователем своего емайла
     public function confirmSignup(): void
     {
-        //Если текущий юзер активирован, то..
+        //Если текущий юзер не ожидает активации, то..
         if (!$this->isWait()) {
             //Выдаем исключение "Юзер ожидает активации"
             throw new \DomainException('User is already active.');

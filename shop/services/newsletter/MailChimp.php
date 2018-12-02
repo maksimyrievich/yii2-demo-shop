@@ -19,17 +19,19 @@ class MailChimp implements Newsletter
             'email_address' => $email,
             'status' => 'subscribed',
         ]);
-        if ($error = $this->client->getLastError()) {
-            throw new \RuntimeException($error);
-        }
+        //Раскоментировать строки ниже после настройки на сайте MailChamp.com
+//        if ($error = $this->client->getLastError()) {
+//            throw new \RuntimeException($error);
+//        }
     }
 
     public function unsubscribe($email): void
     {
         $hash = $this->client->subscriberHash($email);
         $this->client->delete('lists/' . $this->listId . '/members/' . $hash);
-        if ($error = $this->client->getLastError()) {
-            throw new \RuntimeException($error);
-        }
+        //Раскоментировать строки ниже после настройки на сайте MailChamp.com
+        //if ($error = $this->client->getLastError()) {
+        //    throw new \RuntimeException($error);
+        //}
     }
 }

@@ -32,7 +32,10 @@ class BrandSearch extends Model
             'query' => $query,
             'sort' => [
                 'defaultOrder' => ['name' => SORT_ASC]
-            ]
+            ],
+            'pagination' => [
+                'pageSize' => 11,
+            ],
         ]);
 
         $this->load($params);

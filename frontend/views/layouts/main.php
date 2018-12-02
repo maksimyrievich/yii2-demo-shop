@@ -13,6 +13,8 @@ use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
+$this->registerLinkTag(['rel' => 'shortcut icon',  'sizes' => '64x64','type' => 'image/png', 'href' => Url::to(['/favicon_64x64px.png'])]);
+$this->registerLinkTag(['rel' => 'apple-touch-icon', 'sizes' => '152x152', 'type' => 'image/png', 'href' => Url::to(['/favicon_152x152px.png'])]);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -29,7 +31,6 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <link href="<?= Html::encode(Url::canonical()) ?>" rel="canonical"/>
-    <link href="<?= Yii::getAlias('@web/images/catalog/cart.png') ?>" rel="icon"/>
     <?php $this->head() ?>
 </head>
 <body class="common-home">
@@ -165,7 +166,7 @@ AppAsset::register($this);
                 </ul>
             </div>
             <div class="col-sm-3">
-                <h5>Customer Service</h5>
+                <h5>Наш сервис</h5>
                 <ul class="list-unstyled">
                     <li><a href="/index.php?route=information/contact">Contact Us</a></li>
                     <li><a href="/index.php?route=account/return/add">Returns</a></li>
@@ -182,12 +183,12 @@ AppAsset::register($this);
                 </ul>
             </div>
             <div class="col-sm-3">
-                <h5>My Account</h5>
+                <h5>Мой аккаунт</h5>
                 <ul class="list-unstyled">
-                    <li><a href="/index.php?route=account/account">My Account</a></li>
-                    <li><a href="/index.php?route=account/order">Order History</a></li>
-                    <li><a href="/index.php?route=account/wishlist">Wish List</a></li>
-                    <li><a href="/index.php?route=account/newsletter">Newsletter</a></li>
+                    <li><a href="<?= Html::encode(Url::to(['/cabinet'])) ?>">Мой кабинет</a></li>
+                    <li><a href="<?= Html::encode(Url::to(['/cabinet/order'])) ?>">Мои заказы</a></li>
+                    <li><a href="<?= Html::encode(Url::to(['/cabinet/wishlist'])) ?>">Мои пожелания</a></li>
+                    <li><a href="<?= Html::encode(Url::to(['/cabinet/newsletter'])) ?>">Новости</a></li>
                 </ul>
             </div>
         </div>

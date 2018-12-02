@@ -12,12 +12,14 @@ class OrderHelper
     public static function statusList(): array
     {
         return [
-            Status::NEW => 'New',
-            Status::PAID => 'Paid',
-            Status::SENT => 'Sent',
-            Status::COMPLETED => 'Completed',
-            Status::CANCELLED => 'Cancelled',
-            Status::CANCELLED_BY_CUSTOMER => 'Cancelled by customer',
+            Status::WAITINGPAIMENT => 'ОЖИДАЕТ ОПЛАТЫ',
+            Status::TAKEN => 'ВЗЯТ НА ОБРАБОТКУ',                       //Взят на обработку
+            Status::PREPARING => 'ГОТОВИТСЯ К ОТПРАВКЕ',                //Готовится к отправке
+            Status::PAID => 'ОПЛАЧЕН',                                     //Оплачен
+            Status::SENT => 'ОТПРАВЛЕН',                                     //Отправлен
+            Status::COMPLETED => 'ЗАВЕРШЕН',                           //Завершен
+            Status::CANCELLED => 'ОТМЕНЕН',                           //Отменен
+            Status::CANCELLED_BY_CUSTOMER => 'ОТМЕНЕН ПОКУПАТЕЛЕМ',   //Отменен пользователем
         ];
     }
 
@@ -30,13 +32,13 @@ class OrderHelper
     {
         switch ($status) {
             case Product::STATUS_DRAFT:
-                $class = 'label label-default';
+                $class = 'label label-primary';
                 break;
             case Product::STATUS_ACTIVE:
-                $class = 'label label-success';
+                $class = 'label label-primary';
                 break;
             default:
-                $class = 'label label-default';
+                $class = 'label label-success';
         }
 
         return Html::tag('span', ArrayHelper::getValue(self::statusList(), $status), [

@@ -2,10 +2,11 @@
 
 namespace shop\listeners\User;
 
+
 use shop\entities\User\events\UserSignUpRequested;
 use yii\mail\MailerInterface;
 
-class UserSignupRequestedListener
+class UserSignupRequestedEmailListener
 {
     private $mailer;
 
@@ -22,10 +23,11 @@ class UserSignupRequestedListener
                 ['user' => $event->user]
             )
             ->setTo($event->user->email)
-            ->setSubject('Signup confirm')
+            ->setSubject('Регистрация на сайте ' . \Yii::$app->name)
             ->send();
+
         if (!$sent) {
-            throw new \RuntimeException('Email sending error.');
+            throw new \RuntimeException('При отправке письма произошла ошибка.');
         }
     }
 }
